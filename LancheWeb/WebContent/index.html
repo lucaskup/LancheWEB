@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+	
+<title>Lanche WEB</title>
+	<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="bower_components/paper-button/paper-button.html">
+	<link rel="import" href="bower_components/paper-input/paper-input.html">
+	<link rel="stylesheet" href="bower_components/paper-styles/paper-styles.html">
+	<link rel="import" href="bower_components/paper-input/paper-input-error.html">
+	<link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+	
+	<link rel="import" href="bower_components/iron-icons/iron-icons.html">
+  	<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+	
+	<link rel="import" href="css/style.html">
+
+
+</head>
+
+<body class="fullbleed layout vertical">
+
+
+  <paper-toolbar>
+    <paper-icon-button icon="menu"></paper-icon-button>
+    <span class="title">Lanches WEB</span>
+  </paper-toolbar>
+
+
+<div class="card">
+	<h4>Dados para Login</h4>
+	<div class="horizontal-section" style="overflow:hidden">
+		<form is="iron-form" id="formLogin" method="get" action="/">
+			<paper-input-container>
+				<label>Login</label>
+				<input is="iron-input" id="login" required>
+				<paper-input-error>Favor informar o Login!</paper-input-error>
+			</paper-input-container>
+			<paper-input-container >
+				<label>Senha</label>
+				<input is="iron-input" type="password" id="password" required>
+				<paper-input-error>Favor informar a Senha!</paper-input-error>
+			</paper-input-container>
+			<br>
+			<paper-button raised  onclick="clickHandler(event)" style="float: right;">Confirmar</paper-button>
+		</form>
+	</div>
+</div>
+
+  <script>
+    document.getElementById('formLogin').addEventListener('iron-form-submit', display);
+    function clickHandler(event) {
+    	document.getElementById('login').validate();
+    	document.getElementById('password').validate();
+    	if(!document.getElementById('login').invalid && !document.getElementById('password').invalid ){
+    		Polymer.dom(event).localTarget.parentElement.submit();	
+    	}
+
+    	
+    }
+  </script>
+
+</body>
+</html>
