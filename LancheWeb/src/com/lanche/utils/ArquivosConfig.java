@@ -34,6 +34,8 @@ public final class ArquivosConfig {
 	public static final String itemPedidoSearchByPedido = "itempedido_search_by_pedido";
 	
 	public static final String opcionaisItemPedidoSearchByItem = "opcionaisitempedido_search_by_item";
+	public static final String usuarioSearchByLogin = "usuario_search_by_login";
+	
 	
 
 	

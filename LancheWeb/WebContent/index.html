@@ -33,15 +33,15 @@
 <div class="card">
 	<h4>Dados para Login</h4>
 	<div class="horizontal-section" style="overflow:hidden">
-		<form is="iron-form" id="formLogin" method="get" action="/">
+		<form is="iron-form" id="formLogin" method="post" action="/LancheWeb/LoginServlet">
 			<paper-input-container>
 				<label>Login</label>
-				<input is="iron-input" id="login" required>
+				<input is="iron-input" id="login" name="login" required>
 				<paper-input-error>Favor informar o Login!</paper-input-error>
 			</paper-input-container>
 			<paper-input-container >
 				<label>Senha</label>
-				<input is="iron-input" type="password" id="password" required>
+				<input is="iron-input" type="password" id="password" name="password" required>
 				<paper-input-error>Favor informar a Senha!</paper-input-error>
 			</paper-input-container>
 			<br>

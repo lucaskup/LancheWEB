@@ -23,9 +23,9 @@ public class PedidoDAO extends DAO<Pedido> {
 				ResultSet r = comando.executeQuery();
 				pedido = new Pedido(r.getInt(1), r.getDate(2), r.getDate(3),
 						Status.getStatus((r.getInt(4))), new Usuario(
-								r.getInt(5), r.getString(6), r.getString(7),
-								r.getDate(8), r.getString(9),
-								Funcao.getFuncao(r.getInt(10)), r.getString(11), r.getBoolean(12)));
+								r.getInt(5),r.getString(6), r.getString(7), r.getString(8),
+								r.getDate(9), r.getString(10),
+								Funcao.getFuncao(r.getInt(11)), r.getString(12), r.getBoolean(13)));
 				ItemPedidoDAO dao = new ItemPedidoDAO();
 				pedido.setItens(dao.getAllFromPedido(id));
 				//pedido.setItens(itens);

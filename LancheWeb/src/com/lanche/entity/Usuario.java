@@ -6,6 +6,7 @@ import com.lanche.entity.enums.Funcao;
 
 public class Usuario {
 	private int id;
+	private String login;
 	private String nome;
 	private String sobrenome;
 	private Date dataNascimento;
@@ -14,10 +15,11 @@ public class Usuario {
 	private String password;
 	private boolean ativo;
 	
-	public Usuario(int id, String nome, String sobrenome, Date dataNascimento,
+	public Usuario(int id, String login, String nome, String sobrenome, Date dataNascimento,
 			String turma, Funcao funcao, String password, boolean ativo) {
 		super();
 		this.id = id;
+		this.login = login;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.dataNascimento = dataNascimento;
@@ -73,6 +75,12 @@ public class Usuario {
 	}
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
 	}
 	
 	
