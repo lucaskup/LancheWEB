@@ -1,73 +1,34 @@
 package com.lanche.utils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
-
 public final class ArquivosConfig {
-	private static ArquivosConfig arquivos;
-	private static final String propertiesFileName = "db.properties";
-	/*Hard Coded names of Properties*/
-	public static final String dbUser = "db_user";
-	public static final String dbPass = "db_pass";
-	public static final String connectionString = "connection_string";
 	
-	public static final String opcionaisSearchByID = "opcionais_search_by_id";
-	public static final String opcionaisSearchByLanche = "opcionais_search_by_lanche";
-	public static final String opcionaisInsert = "opcionais_insert";
-	public static final String opcionaisUpdate = "opcionais_update";
-	public static final String opcionaisDelete = "opcionais_delete";
+	/*Hard Coded SQL*/
+	public static final String dbUser = "lanche";
+	public static final String dbPass = "123";
+	public static final String connectionString = "jdbc:mysql://127.0.0.1:3306/LANCHE";
 	
-	
-	public static final String lancheSearchByID = "lanche_search_by_id";
-	public static final String lancheSearchAll = "lanche_search_all";
-	public static final String lancheInsert = "lanche_insert";
-	public static final String lancheUpdate = "lanche_update";
-	public static final String lancheDelete = "lanche_delete";
-	
-	public static final String pedidoSearchByID = "pedido_search_by_id";
-	public static final String pedidoInsert = "pedido_insert";
-	public static final String pedidoUpdate = "pedido_update";
-	public static final String pedidoDelete = "pedido_delete";
-	
-	public static final String itemPedidoSearchByPedido = "itempedido_search_by_pedido";
-	
-	public static final String opcionaisItemPedidoSearchByItem = "opcionaisitempedido_search_by_item";
-	public static final String usuarioSearchByLogin = "usuario_search_by_login";
+	public static final String opcionaisSearchByID = "SELECT o.idOpcionais, o.descricao, o.precoAdicional, o.permiteMaisQueUm, o.dtCadastro, o.dtModificacao FROM lanche.opcionais as o WHERE o.idOpcionais = ?";
+	public static final String opcionaisSearchByLanche = "SELECT o.idOpcionais, o.descricao, o.precoAdicional, o.permiteMaisQueUm, o.dtCadastro, o.dtModificacao FROM lanche.lanchexopcionais x JOIN lanche.opcionais as o ON x.fkOpcionais = o.idOpcionais WHERE x.fkLanche= ?"; 
+	public static final String opcionaisInsert = "INSERT INTO lanche.opcionais (descricao, precoAdicional, permiteMaisQueUm, dtCadastro, dtModificacao) VALUES (?, ?, ?, ?, ?)";
+	public static final String opcionaisUpdate = "UPDATE lanche.opcionais SET descricao = ?, precoAdicional = ?, permiteMaisQueUm = ?, dtCadastro = ?, dtModificacao = ? WHERE idOpcionais = ?";
+	public static final String opcionaisDelete = "DELETE FROM lanche.opcionais WHERE idOpcionais = ?";
 	
 	
-
+	public static final String lancheSearchByID = "SELECT lanche.idLanche, lanche.descricao, lanche.preco, lanche.dtCadastro, lanche.dtModificacao, lanche.ativo FROM lanche.lanche WHERE lanche.idLanche = ?";
+	public static final String lancheSearchAll = "SELECT lanche.idLanche, lanche.descricao, lanche.preco, lanche.dtCadastro, lanche.dtModificacao, lanche.ativo FROM lanche.lanche";
+	public static final String lancheInsert = "INSERT INTO lanche.lanche (descricao, preco, dtCadastro, dtModificacao, ativo) VALUES (?, ?, ?, ?, ?)";
+	public static final String lancheUpdate = "UPDATE lanche.lanche SET descricao = ?, preco = ?, dtCadastro = ?, dtModificacao = ?, ativo = ? WHERE idLanche = ?";
+	public static final String lancheDelete = "DELETE FROM lanche.lanche WHERE idLanche = ?";
 	
-	private Properties propertiesFile;
+	public static final String pedidoSearchByID = "SELECT p.idPedido, p.dtCriacao, p.status, u.idUsuario, u.login, u.nome, u.sobrenome, u.dataNascimento, u.turma, u.funcao, u.password, u.ativo FROM lanche.pedido p JOIN lanche.usuario u ON p.fkUsuario = u.idUsuario WHERE p.idPedido = ?";
+	public static final String pedidoInsert = "INSERT INTO lanche.pedido (fkUsuario, dtCriacao, status) VALUES (?, ?, ?)";
+	public static final String pedidoUpdate = "UPDATE lanche.pedido SET fkUsuario = ?, dtCriacao = ?, status = ? WHERE idPedido = ?";
+	public static final String pedidoDelete = "DELETE FROM lanche.pedido WHERE idPedido = ?";
 	
-	public String getProperty(String property){
-		return propertiesFile.getProperty(property).trim();
-	}
+	public static final String itemPedidoSearchByPedido = "SELECT i.idItemPedido, i.numItem, i.quantidade, l.idLanche, l.descricao, l.preco, l.dtCadastro, l.dtModificacao, l.ativo FROM lanche.itempedido i JOIN lanche.lanche l ON i.fkLanche = l.idLanche WHERE i.fkPedido = ?";
 	
-	private ArquivosConfig(){
-		
-		
-		Properties prop = new Properties();
-		try {
-
-			prop.load(new FileInputStream(propertiesFileName));
-			
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
-	public static ArquivosConfig getInstance(){
-		if(arquivos == null){
-			arquivos =  new ArquivosConfig();
-		}
-		return arquivos;
-	}
+	public static final String opcionaisItemPedidoSearchByItem = "SELECT o.idOpcionais, o.descricao, o.precoAdicional, o.permiteMaisQueUm, o.dtCadastro, o.dtModificacao, oi.quantidade FROM lanche.opcionaisitempedido oi JOIN lanche.opcionais o ON oi.fkOpcionais = o.idOpcionais WHERE oi.fkItemPedido = ?";
+	public static final String usuarioSearchByLogin = "SELECT u.idUsuario, u.login, u.nome, u.sobrenome, u.dataNascimento, u.turma, u.funcao, u.password, u.ativo FROM lanche.usuario u WHERE u.login = ?";
+	
 
 }

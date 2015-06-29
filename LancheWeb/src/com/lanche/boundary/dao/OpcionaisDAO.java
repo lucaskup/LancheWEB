@@ -17,8 +17,7 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 			Opcionais opcional = null;
 			try {
 				
-				comando = con.prepareStatement(arq
-						.getProperty(ArquivosConfig.opcionaisSearchByID));
+				comando = con.prepareStatement(ArquivosConfig.opcionaisSearchByID);
 				comando.setInt(1, id);
 
 				ResultSet r = comando.executeQuery();
@@ -47,8 +46,7 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 			ArrayList<Opcionais> list = new ArrayList<Opcionais>();
 			try {
 
-				comando = con.prepareStatement(arq
-						.getProperty(ArquivosConfig.opcionaisSearchByLanche));
+				comando = con.prepareStatement(ArquivosConfig.opcionaisSearchByLanche);
 				comando.setInt(1, idLanche);
 
 				ResultSet r = comando.executeQuery();
@@ -79,7 +77,7 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 		boolean ret = false;
 		if(openConnection()){
 			try {
-				comando = con.prepareStatement(arq.getProperty(ArquivosConfig.opcionaisDelete));
+				comando = con.prepareStatement(ArquivosConfig.opcionaisDelete);
 				comando.setInt(1, t.getId());
 				ret = comando.executeUpdate() > 0;
 			} catch (SQLException e) {
@@ -121,7 +119,7 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 
 	private void insert(Opcionais t) throws SQLException {
 		if(openConnection()){
-			comando = con.prepareStatement(arq.getProperty(ArquivosConfig.opcionaisInsert),Statement.RETURN_GENERATED_KEYS);
+			comando = con.prepareStatement(ArquivosConfig.opcionaisInsert,Statement.RETURN_GENERATED_KEYS);
 			comando.setString(1, t.getDescricao());
 			comando.setDouble(2, t.getPrecoAdicional());
 			comando.setBoolean(3, t.permiteMaisQueUm());
@@ -138,7 +136,7 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 
 	private void update(Opcionais t) throws SQLException {
 		if(openConnection()){
-			comando = con.prepareStatement(arq.getProperty(ArquivosConfig.opcionaisUpdate));
+			comando = con.prepareStatement(ArquivosConfig.opcionaisUpdate);
 			comando.setString(1, t.getDescricao());
 			comando.setDouble(2, t.getPrecoAdicional());
 			comando.setBoolean(3, t.permiteMaisQueUm());

@@ -20,8 +20,7 @@ public class UsuarioDAO extends DAO<Usuario> {
 			Usuario usuario = null;
 			try {
 				
-				comando = con.prepareStatement(arq
-						.getProperty(ArquivosConfig.usuarioSearchByLogin));
+				comando = con.prepareStatement(ArquivosConfig.usuarioSearchByLogin);
 				comando.setString(1, login);
 
 				ResultSet r = comando.executeQuery();
@@ -51,6 +50,12 @@ public class UsuarioDAO extends DAO<Usuario> {
 	public boolean persist(Usuario t) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	public static void main(String[] args) {
+		UsuarioDAO dao = new UsuarioDAO();
+		dao.searchByLogin("lucas.kup");
+		
+		
 	}
 
 }

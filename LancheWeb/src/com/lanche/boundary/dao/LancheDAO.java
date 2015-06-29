@@ -17,8 +17,7 @@ public class LancheDAO extends DAO<Lanche> {
 			Lanche lanche = null;
 			try {
 				
-				comando = con.prepareStatement(arq
-						.getProperty(ArquivosConfig.lancheSearchByID));
+				comando = con.prepareStatement(ArquivosConfig.lancheSearchByID);
 				comando.setInt(1, id);
 
 				ResultSet r = comando.executeQuery();
@@ -46,8 +45,7 @@ public class LancheDAO extends DAO<Lanche> {
 		if (openConnection()) {
 			ArrayList<Lanche> list = new ArrayList<Lanche>();
 			try {
-				comando = con.prepareStatement(arq
-						.getProperty(ArquivosConfig.lancheSearchAll));
+				comando = con.prepareStatement(ArquivosConfig.lancheSearchAll);
 				ResultSet r = comando.executeQuery();
 				while (r.next()) {
 					Lanche lanche = new Lanche(r.getInt(1), r.getString(2),
@@ -75,7 +73,7 @@ public class LancheDAO extends DAO<Lanche> {
 		boolean ret = false;
 		if(openConnection()){
 			try {
-				comando = con.prepareStatement(arq.getProperty(ArquivosConfig.lancheDelete));
+				comando = con.prepareStatement(ArquivosConfig.lancheDelete);
 				comando.setInt(1, t.getId());
 				ret = comando.executeUpdate() > 0;
 			} catch (SQLException e) {
@@ -115,7 +113,7 @@ public class LancheDAO extends DAO<Lanche> {
 
 	private void insert(Lanche t) throws SQLException {
 		if(openConnection()){
-			comando = con.prepareStatement(arq.getProperty(ArquivosConfig.lancheInsert),Statement.RETURN_GENERATED_KEYS);
+			comando = con.prepareStatement(ArquivosConfig.lancheInsert,Statement.RETURN_GENERATED_KEYS);
 			comando.setString(1, t.getDescricao());
 			comando.setDouble(2, t.getPreco());
 			comando.setDate(3, (Date) t.getDtCadastro());
@@ -132,7 +130,7 @@ public class LancheDAO extends DAO<Lanche> {
 
 	private void update(Lanche t) throws SQLException {
 		if(openConnection()){
-			comando = con.prepareStatement(arq.getProperty(ArquivosConfig.lancheUpdate));
+			comando = con.prepareStatement(ArquivosConfig.lancheUpdate);
 			comando.setString(1, t.getDescricao());
 			comando.setDouble(2, t.getPreco());
 			comando.setDate(3, (Date) t.getDtCadastro());

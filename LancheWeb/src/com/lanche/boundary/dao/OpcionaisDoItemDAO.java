@@ -33,8 +33,7 @@ public class OpcionaisDoItemDAO extends DAO<OpcionaisDoItem> {
 			ArrayList<OpcionaisDoItem> list = new ArrayList<OpcionaisDoItem>();
 			try {
 
-				comando = con.prepareStatement(arq
-						.getProperty(ArquivosConfig.opcionaisItemPedidoSearchByItem));
+				comando = con.prepareStatement(ArquivosConfig.opcionaisItemPedidoSearchByItem);
 				comando.setInt(1, idItemPedido);
 
 				ResultSet r = comando.executeQuery();

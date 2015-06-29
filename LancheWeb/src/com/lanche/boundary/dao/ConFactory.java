@@ -27,10 +27,10 @@ public class ConFactory {
 			return null;
 		}
 		
-		ArquivosConfig arq = ArquivosConfig.getInstance();
-		String connString = arq.getProperty(ArquivosConfig.connectionString);
-		String dbUser = arq.getProperty(ArquivosConfig.dbUser);
-		String dbPass = arq.getProperty(ArquivosConfig.dbPass);
+		
+		String connString = ArquivosConfig.connectionString;
+		String dbUser = ArquivosConfig.dbUser;
+		String dbPass = ArquivosConfig.dbPass;
 		
 		try {
 			c = DriverManager.getConnection(connString, dbUser, dbPass);

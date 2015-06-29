@@ -6,6 +6,7 @@
 <link rel="import" href="typography.html">
 <link rel="import" href="shadow.html">
 
+
 <style is="custom-style">
 
   body {
@@ -23,6 +24,63 @@
 	margin-bottom: 0px;
 	margin-top: 10px;
 	}
+  iron-icon[icon="check"] {
+    color: #a4c639;
+    width: 26px;
+    height: 26px;
+    }
+  
+  iron-icon[icon="close"] {
+    color: #F44336;
+    width: 26px;
+    height: 26px;
+    }
+  paper-material{
+  	background-color: white;
+  	display: inline-block;
+  	margin-left: auto;
+  	margin-right: auto;
+  	}
+  paper-icon-button[icon="create"]{
+    color: #A3A3A3;
+    }
+  paper-icon-button[icon="delete"]{
+    color: #A3A3A3;
+    }
+
+  paper-fab.red {
+    --paper-fab-background: #F44336;
+    --paper-fab-keyboard-focus-background: #B71C1C;
+    }
+
+  table{
+	background-color:white;
+	border-collapse: collapse;
+	}
+
+  th{
+	padding-right:20px;
+	padding-left:20px;
+	height:46px;
+	border-bottom: 1px solid #e0e0e0;
+	}
+	
+  td{
+  	padding-bottom:4px;
+	padding-right:20px;
+	padding-left:20px;
+	height:38px;
+	border-bottom: 1px solid #e0e0e0;
+	}
+	.td_numeric{
+	text-align: right;
+	}
+	.td_alpha{
+	text-align: left;
+	}
+	.td_logic{
+	text-align: center;
+	}
 
   .horizontal-section-container {
     @apply(--layout-horizontal);
@@ -33,14 +91,14 @@
   .vertical-section-container {
     @apply(--layout-vertical);
     @apply(--center-justified);
+
   }
 
   .horizontal-section {
     background-color: white;
     padding: 24px;
-    margin-right: 24px;
-    min-width: 130px;
-	max-width: 450px;
+	min-width:400px;
+  	max-width:1080px;
 
     @apply(--shadow-elevation-2dp);
   }
@@ -53,22 +111,27 @@
     @apply(--shadow-elevation-2dp);
   }
 
-  .centered {
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-  }
 
   code {
     color: var(--google-grey-700);
   }
   .card{
   	padding: 24px;
+  	min-width:400px;
+  	max-width:1080px;
+  	margin-left: auto ;
+  	margin-right: auto ;
+  	display: inline-block;
   }
 
   /* TODO: remove this hack and use horizontal-section-container instead */
   body > div.layout.horizontal.center-justified {
     @apply(--layout-wrap);
   }
+  
+  
+
+ 
+  
 
 </style>

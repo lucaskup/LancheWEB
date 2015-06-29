@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+	
+<title>Lanche WEB</title>
+
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="bower_components/iron-icon/iron-icon.html">
+  <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+  <link rel="import" href="bower_components/iron-icons/communication-icons.html">
+  <link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+  <link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+  <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+  
+  <link rel="import" href="bower_components/paper-item/paper-icon-item.html">
+  <link rel="import" href="bower_components/paper-item/paper-item.html">
+  <link rel="import" href="bower_components/paper-item/paper-item-body.html">
+  <link rel="import" href="bower_components/paper-styles/paper-styles.html">
+  <link rel="import" href="bower_components/paper-material/paper-material.html">
+  <link rel="import" href="bower_components/paper-fab/paper-fab.html">
+
+  <link rel="import" href="bower_components/paper-toggle-button/paper-toggle-button.html">
+  <link rel="import" href="css/style.html">
+
+</head>
+
+<body class="fullbleed layout vertical">
+
+  <paper-toolbar>
+    <paper-icon-button icon="menu"></paper-icon-button>
+    <span class="title">Lanches WEB</span>
+  </paper-toolbar>
+
+    <div class = "card">
+      
+	<paper-material elevation="2">
+		<h3 style="padding-left: 10px; padding-top: 10px">Lanches</h3>
+		<table>
+		
+		  <thead>
+		  <tr>
+		    <th>ID</th>
+		    <th>Descrição</th> 
+		    <th>Preço</th>
+		    <th>Data de Cadastro</th> 
+		    <th>Data de Modificação</th>
+		    <th>Ativo</th>
+		    <th></th>
+		  </tr>
+		  </thead>
+		  <tbody>
+		  <tr>
+		    <td class="td_numeric">1</td>
+		    <td class="td_alpha">Sanduiche de Presunto</td> 
+		    <td class="td_numeric">3.50</td>
+		    <td class="td_alpha">25/01/1989 - 15:30</td>
+		    <td class="td_alpha">28/06/2015 - 15:31</td> 
+		    <td class="td_logic"><iron-icon icon="close"></iron-icon></td>
+		    <td class="td_logic"><paper-icon-button icon="create"></paper-icon-button><paper-icon-button icon="delete"></paper-icon-button></td>
+		  </tr>
+		  <tr>
+		    <td class="td_numeric">2</td>
+		    <td class="td_alpha">Coxinha de Frango</td> 
+		    <td class="td_numeric">2.50</td>
+		    <td class="td_alpha">25/01/2014 - 15:30</td>
+		    <td class="td_alpha"> </td> 
+		    <td class="td_logic"><iron-icon icon="check"></iron-icon></td>
+		    <td class="td_logic"><paper-icon-button icon="create"></paper-icon-button><paper-icon-button icon="delete"></paper-icon-button></td>
+		  </tr>
+		  <tr>
+		    <td class="td_numeric">3</td>
+		    <td class="td_alpha">Xis Salada</td> 
+		    <td class="td_numeric">9.50</td>
+		    <td class="td_alpha">25/01/2014 - 15:30</td>
+		    <td class="td_alpha"> </td> 
+		    <td class="td_logic"><iron-icon icon="check"></iron-icon></td>
+		    <td class="td_logic"><paper-icon-button icon="create"></paper-icon-button><paper-icon-button icon="delete"></paper-icon-button></td>
+		  </tr>
+		  </tbody>
+		</table>
+		 
+	</paper-material>
+      
+   </div>
+<paper-fab icon="add" title="add" tabindex="0" class="red" style="position: absolute;bottom: 38px;right: 200px;"></paper-fab>
+ 
+</body>
+</html>

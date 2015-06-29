@@ -17,8 +17,7 @@ public class PedidoDAO extends DAO<Pedido> {
 			Pedido pedido = null;
 			try {
 
-				comando = con.prepareStatement(arq
-						.getProperty(ArquivosConfig.pedidoSearchByID));
+				comando = con.prepareStatement(ArquivosConfig.pedidoSearchByID);
 				comando.setInt(1, id);
 				ResultSet r = comando.executeQuery();
 				pedido = new Pedido(r.getInt(1), r.getDate(2), r.getDate(3),
@@ -50,7 +49,7 @@ public class PedidoDAO extends DAO<Pedido> {
 		boolean ret = false;
 		if(openConnection()){
 			try {
-				comando = con.prepareStatement(arq.getProperty(ArquivosConfig.pedidoDelete));
+				comando = con.prepareStatement(ArquivosConfig.pedidoDelete);
 				comando.setInt(1, t.getId());
 				ret = comando.executeUpdate() > 0;
 			} catch (SQLException e) {

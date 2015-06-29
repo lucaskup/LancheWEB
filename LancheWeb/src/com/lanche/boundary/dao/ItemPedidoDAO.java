@@ -21,8 +21,7 @@ public class ItemPedidoDAO extends DAO<ItemPedidoDAO> {
 			ArrayList<ItemPedido> list = new ArrayList<ItemPedido>();
 			try {
 
-				comando = con.prepareStatement(arq
-						.getProperty(ArquivosConfig.itemPedidoSearchByPedido));
+				comando = con.prepareStatement(ArquivosConfig.itemPedidoSearchByPedido);
 				comando.setInt(1, idPedido);
 
 				ResultSet r = comando.executeQuery();

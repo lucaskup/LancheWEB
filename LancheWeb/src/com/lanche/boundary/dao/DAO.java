@@ -4,15 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import com.lanche.utils.ArquivosConfig;
-
 public abstract class DAO <T> {
 	protected Connection con;  
 	protected PreparedStatement comando;
-	protected ArquivosConfig arq; 
-	public DAO(){
-		arq = ArquivosConfig.getInstance();
-	}
+
 
 	public abstract T searchByID(int id);
 	public abstract boolean delete(T t);
