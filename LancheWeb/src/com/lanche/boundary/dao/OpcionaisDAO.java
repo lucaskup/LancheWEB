@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.lanche.entity.Opcionais;
 import com.lanche.utils.ArquivosConfig;
@@ -21,10 +23,20 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 				comando.setInt(1, id);
 
 				ResultSet r = comando.executeQuery();
-				if (r.next())
+				if (r.next()){
+					Date dtCadastro = null;
+					Date dtModificacao = null;
+					Timestamp tsCadastro = r.getTimestamp(5);
+					Timestamp tsModificacao = r.getTimestamp(6);
+					if(tsCadastro != null)
+						dtCadastro = new Date(tsCadastro.getTime());
+					if(tsModificacao != null)
+						dtModificacao = new Date(tsModificacao.getTime());
 					opcional = new Opcionais(r.getInt(1), r.getString(2),
-							r.getDouble(3), r.getBoolean(4), r.getDate(5),
-							r.getDate(6));
+							r.getDouble(3), r.getBoolean(4), dtCadastro,
+							dtModificacao);
+				}
+					
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -41,6 +53,44 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 		return null;
 	}
 
+	public List<Opcionais> getAll(){
+		if (openConnection()) {
+			ArrayList<Opcionais> list = new ArrayList<Opcionais>();
+			try {
+
+				comando = con.prepareStatement(ArquivosConfig.opcionaisSearchAll);
+				
+				ResultSet r = comando.executeQuery();
+				while (r.next()) {
+					Date dtCadastro = null;
+					Date dtModificacao = null;
+					Timestamp tsCadastro = r.getTimestamp(5);
+					Timestamp tsModificacao = r.getTimestamp(6);
+					if(tsCadastro != null)
+						dtCadastro = new Date(tsCadastro.getTime());
+					if(tsModificacao != null)
+						dtModificacao = new Date(tsModificacao.getTime());
+					Opcionais opcional = new Opcionais(r.getInt(1), r.getString(2),
+							r.getDouble(3), r.getBoolean(4), dtCadastro,
+							dtModificacao);
+
+					list.add(opcional);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return list;
+
+		}
+		return null;
+	}
+	
 	public ArrayList<Opcionais> searchByLanche(int idLanche){
 		if (openConnection()) {
 			ArrayList<Opcionais> list = new ArrayList<Opcionais>();
@@ -52,8 +102,8 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 				ResultSet r = comando.executeQuery();
 				while (r.next()) {
 					Opcionais opcional = new Opcionais(r.getInt(1), r.getString(2),
-							r.getDouble(3), r.getBoolean(4), r.getDate(5),
-							r.getDate(6));
+							r.getDouble(3), r.getBoolean(4), new Date(r.getTimestamp(5).getTime()),
+							new Date(r.getTimestamp(6).getTime()));
 
 					list.add(opcional);
 				}
@@ -123,11 +173,9 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 			comando.setString(1, t.getDescricao());
 			comando.setDouble(2, t.getPrecoAdicional());
 			comando.setBoolean(3, t.permiteMaisQueUm());
-			comando.setDate(4, (Date) t.getDtCadastro());
-			comando.setDate(5, (Date) t.getDtModificacao());
 			
 			if(comando.executeUpdate()>0){
-				ResultSet r = comando.getResultSet();
+				ResultSet r = comando.getGeneratedKeys();
 				if(r.next())
 					t.setId(r.getInt(1));
 			}	
@@ -140,13 +188,15 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 			comando.setString(1, t.getDescricao());
 			comando.setDouble(2, t.getPrecoAdicional());
 			comando.setBoolean(3, t.permiteMaisQueUm());
-			comando.setDate(4, (Date) t.getDtCadastro());
-			comando.setDate(5, (Date) t.getDtModificacao());
-			comando.setInt(6, t.getId());
+			comando.setInt(4, t.getId());
 			
 			comando.executeUpdate();	
 		}
 		
+	}
+
+	public boolean delete(int id) {
+		return delete(new Opcionais(id));
 	}
 
 }

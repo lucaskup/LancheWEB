@@ -19,7 +19,16 @@ public class Opcionais {
 		this.dtCadastro = dtCadastro;
 		this.dtModificacao = dtModificacao;
 	}
-	
+	public Opcionais(int id, String descricao, double precoAdicional,
+			boolean permiteMaisQueUm) {
+		this.id = id;
+		this.descricao = descricao;
+		this.precoAdicional = precoAdicional;
+		this.permiteMaisQueUm = permiteMaisQueUm;
+	}
+	public Opcionais(int id) {
+		this.id = id;
+	}
 	public int getId() {
 		return id;
 	}

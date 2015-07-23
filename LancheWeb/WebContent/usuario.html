@@ -27,10 +27,8 @@
   <link rel="import" href="bower_components/neon-animation/neon-animations.html">
   <link rel="import" href="bower_components/paper-button/paper-button.html">
 
-
   <link rel="import" href="bower_components/paper-toggle-button/paper-toggle-button.html">
   
-
   <link rel="import" href="bower_components/paper-input/paper-input-error.html">
   <link rel="import" href="bower_components/paper-input/paper-input.html">
   <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
@@ -106,21 +104,41 @@
 
  
     <paper-dialog class="dialogo_lanche" id="editar" with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
-      <h2>Editar Opcional</h2>
+      <h2>Editar Usuário</h2>
       		<form is="iron-form" id="formEditar" method="post" action="/LancheWeb/LoginServletsss">
-			<paper-input label="id" id="d_id" disabled></paper-input>	
+			<paper-input label="id" id="d_id" disabled></paper-input>
+						
 			<paper-input-container always-float-label>
-				<label>Descrição</label>
-				<input is="iron-input" id="d_descricao"  name="descricao" required allowedPattern="^(?!\s*$).+">
-				<paper-input-error>Favor informar a Descrição!</paper-input-error>
+				<label>Login</label>
+				<input is="iron-input" id="d_login"  name="login" required>
+				<paper-input-error>Favor informar o login!</paper-input-error>
 			</paper-input-container>
 			<paper-input-container always-float-label>
-				<label>Preço</label>
-				<input is="iron-input" id="d_preco" name="preco" required allowedPattern="[0-9]+(\.[0-9][0-9]?)?">
-				<paper-input-error>Favor informar o Preço!</paper-input-error>
+				<label>Nome</label>
+				<input is="iron-input" id="d_nome" name="nome" required>
+				<paper-input-error>Favor informar o Nome!</paper-input-error>
 			</paper-input-container>
+			
+			<paper-input-container always-float-label>
+				<label>Sobrenome</label>
+				<input is="iron-input" id="d_sobrenome"  name="sobrenome" required>
+				<paper-input-error>Favor informar o Sobrenome!</paper-input-error>
+			</paper-input-container>
+			
+			<paper-input-container always-float-label>
+				<label>Data de Nascimento</label>
+				<input is="iron-input" id="d_nome" name="nome" required>
+				<paper-input-error>Favor informar a Data de Nascimento!</paper-input-error>
+			</paper-input-container>
+			
+			<paper-input-container always-float-label>
+				<label>Turma</label>
+				<input is="iron-input" id="d_turma" name="turma" required>
+				<paper-input-error>Favor informar a Turma!</paper-input-error>
+			</paper-input-container>
+			
 			<br>
-			<paper-checkbox id="d_permitemais" name="permitemais" class="green">Permite mais de Um</paper-checkbox>
+			<paper-checkbox id="d_ativo" name="ativo" class="green">Ativo</paper-checkbox>
 
 		</form>
 		<div class="buttons">

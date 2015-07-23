@@ -28,6 +28,21 @@ public class Usuario {
 		this.password = password;
 		this.ativo = ativo;
 	}
+	public Usuario(int id, String login, String nome, String sobrenome, Date dataNascimento,
+			String turma, Funcao funcao, boolean ativo) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.dataNascimento = dataNascimento;
+		this.turma = turma;
+		this.funcao = funcao;
+		this.ativo = ativo;
+	}
+	public Usuario(int id) {
+		this.id = id;
+	}
 	public int getId() {
 		return id;
 	}

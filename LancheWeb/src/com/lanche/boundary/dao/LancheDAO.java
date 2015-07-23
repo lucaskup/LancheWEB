@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import com.lanche.entity.Lanche;
@@ -21,10 +22,22 @@ public class LancheDAO extends DAO<Lanche> {
 				comando.setInt(1, id);
 
 				ResultSet r = comando.executeQuery();
-				if (r.next())
+				
+				if (r.next()){
+					Date dtCadastro = null;
+					Date dtModificacao = null;
+					Timestamp tsCadastro = r.getTimestamp(4);
+					Timestamp tsModificacao = r.getTimestamp(5);
+					if(tsCadastro != null)
+						dtCadastro = new Date(tsCadastro.getTime());
+					if(tsModificacao != null)
+						dtModificacao = new Date(tsModificacao.getTime());
+					
 					lanche = new Lanche(r.getInt(1), r.getString(2),
-							r.getDouble(3), r.getDate(4),
-							r.getDate(5), r.getBoolean(6));
+							r.getDouble(3), dtCadastro,
+							dtModificacao, r.getBoolean(6));
+				}
+					
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -48,9 +61,18 @@ public class LancheDAO extends DAO<Lanche> {
 				comando = con.prepareStatement(ArquivosConfig.lancheSearchAll);
 				ResultSet r = comando.executeQuery();
 				while (r.next()) {
+					Date dtCadastro = null;
+					Date dtModificacao = null;
+					Timestamp tsCadastro = r.getTimestamp(4);
+					Timestamp tsModificacao = r.getTimestamp(5);
+					if(tsCadastro != null)
+						dtCadastro = new Date(tsCadastro.getTime());
+					if(tsModificacao != null)
+						dtModificacao = new Date(tsModificacao.getTime());
+					
 					Lanche lanche = new Lanche(r.getInt(1), r.getString(2),
-							r.getDouble(3), r.getDate(4),
-							r.getDate(5),r.getBoolean(6));
+							r.getDouble(3), dtCadastro, //r.getDate(4),
+							dtModificacao,r.getBoolean(6));
 
 					list.add(lanche);
 				}
@@ -82,6 +104,10 @@ public class LancheDAO extends DAO<Lanche> {
 			}
 		}
 		return ret;	
+	}
+	public boolean delete(int id) {
+		Lanche l = new Lanche(id);		
+		return delete(l);	
 	}
 
 	@Override
@@ -116,12 +142,10 @@ public class LancheDAO extends DAO<Lanche> {
 			comando = con.prepareStatement(ArquivosConfig.lancheInsert,Statement.RETURN_GENERATED_KEYS);
 			comando.setString(1, t.getDescricao());
 			comando.setDouble(2, t.getPreco());
-			comando.setDate(3, (Date) t.getDtCadastro());
-			comando.setDate(4, (Date) t.getDtModificacao());
-			comando.setBoolean(5, t.isAtivo());
+			comando.setBoolean(3, t.isAtivo());
 			
 			if(comando.executeUpdate()>0){
-				ResultSet r = comando.getResultSet();
+				ResultSet r = comando.getGeneratedKeys();
 				if(r.next())
 					t.setId(r.getInt(1));
 			}	
@@ -133,10 +157,8 @@ public class LancheDAO extends DAO<Lanche> {
 			comando = con.prepareStatement(ArquivosConfig.lancheUpdate);
 			comando.setString(1, t.getDescricao());
 			comando.setDouble(2, t.getPreco());
-			comando.setDate(3, (Date) t.getDtCadastro());
-			comando.setDate(4, (Date) t.getDtModificacao());
-			comando.setBoolean(5, t.isAtivo());
-			comando.setInt(6, t.getId());
+			comando.setBoolean(3, t.isAtivo());
+			comando.setInt(4, t.getId());
 			
 			comando.executeUpdate();	
 		}

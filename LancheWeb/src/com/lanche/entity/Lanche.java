@@ -21,6 +21,12 @@ public class Lanche {
 		this.dtModificacao = dtModificacao;
 		this.ativo = ativo;
 	}
+	public Lanche(int id) {
+		this.id = id;
+	}
+	public Lanche(int id, String descricao, double preco, boolean ativo) {
+		this(id, descricao, preco, null, null, ativo);
+	}
 	public int getId() {
 		return id;
 	}
