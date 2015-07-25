@@ -57,9 +57,6 @@
    
     <div>
     <paper-menu class="list">
-    <a href="/LancheWeb/index.html">
-          <paper-item>Login</paper-item>
-    </a>
     <a href="/LancheWeb/lanche.jsp">
           <paper-item>Lanches</paper-item>
     </a>

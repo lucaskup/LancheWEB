@@ -36,44 +36,56 @@
   <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
   <link rel="import" href="bower_components/paper-menu/paper-menu.html">
   <link rel="import" href="css/style.html">
+
+
+
 </head>
 
 <body>
-<paper-drawer-panel id="paperDrawerPanel" force-narrow="true">
-  <paper-header-panel drawer mode="waterfall">
-   
-	<paper-toolbar>
-		<paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-    	<span class="title">Menu</span>
-  	</paper-toolbar>
-   
-    <div>
-    <paper-menu class="list">
 
-    <a href="/LancheWeb/lanche.jsp">
-          <paper-item>Lanches</paper-item>
-    </a>
-    <a href="/LancheWeb/opcional.jsp">
-          <paper-item>Opcionais</paper-item>
-    </a>
-    <a href="/LancheWeb/usuario.jsp">
-          <paper-item>Usuários</paper-item>
-    </a>
 
-	</paper-menu>
-	</div>
-  </paper-header-panel>
-  
-  <paper-header-panel main mode="waterfall">
 	  <paper-toolbar>
-	    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+
 	    <span class="title">Lanches WEB</span>
 	  </paper-toolbar>
 
   
-	
-		</paper-header-panel>
-</paper-drawer-panel>
-  
+		<paper-material elevation="2" class="paper-material-login">
+		
+			<h3 style="padding-left: 10px; padding-top: 10px">Dados para Login</h3>
+			<div>
+				<form is="iron-form" id="formLogin" method="post" action="j_security_check" style="padding-left: 30px;padding-right: 30px">
+					<paper-input-container>
+						<label>Login</label>
+						<input is="iron-input" type="text" id="login" name="j_username" required>
+						<paper-input-error>Favor informar o Login!</paper-input-error>
+					</paper-input-container>
+					<paper-input-container >
+						<label>Senha</label>
+						<input is="iron-input" type="password" id="password" name="j_password" required>
+						<paper-input-error>Favor informar a Senha!</paper-input-error>
+					</paper-input-container>
+					<br>
+					
+				</form>
+		</div>
+		<div class="buttons" style="position: relative;left: 270px;bottom: 15px"><paper-button raised  onclick="clickHandler(event)">Confirmar</paper-button>
+		</div>
+		</paper-material>
+
+
+  <script>
+
+    function clickHandler(event) {
+    	document.getElementById('login').validate();
+    	document.getElementById('password').validate();
+    	if(!document.getElementById('login').invalid && !document.getElementById('password').invalid ){
+    		document.getElementById('formLogin').submit();	
+    	}
+
+    	
+    }
+  </script>
+
 </body>
 </html>
