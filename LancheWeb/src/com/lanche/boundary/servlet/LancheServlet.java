@@ -1,6 +1,8 @@
 package com.lanche.boundary.servlet;
 
 import java.io.IOException;
+import java.util.StringTokenizer;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,7 +51,14 @@ public class LancheServlet extends HttpServlet {
 			LancheController c = new LancheController();
 			c.delete(Integer.parseInt(id));
 			
-		}else {
+		}else if(method.equalsIgnoreCase("OPCIONAIS")) {
+			String id = request.getParameter("id");
+			String idOpcionais = request.getParameter("idOpcionais");
+
+			LancheController c = new LancheController();
+			c.updateOpcionaisDoLanche(Integer.parseInt(id),idOpcionais);
+			
+		}else{
 			String id = request.getParameter("id");
 			String descricao = request.getParameter("descricao");
 			String preco = request.getParameter("preco");

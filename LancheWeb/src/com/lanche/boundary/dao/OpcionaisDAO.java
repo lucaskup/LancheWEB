@@ -24,17 +24,7 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 
 				ResultSet r = comando.executeQuery();
 				if (r.next()){
-					Date dtCadastro = null;
-					Date dtModificacao = null;
-					Timestamp tsCadastro = r.getTimestamp(5);
-					Timestamp tsModificacao = r.getTimestamp(6);
-					if(tsCadastro != null)
-						dtCadastro = new Date(tsCadastro.getTime());
-					if(tsModificacao != null)
-						dtModificacao = new Date(tsModificacao.getTime());
-					opcional = new Opcionais(r.getInt(1), r.getString(2),
-							r.getDouble(3), r.getBoolean(4), dtCadastro,
-							dtModificacao);
+					opcional = getOpcionalFromResultSet(r);
 				}
 					
 			} catch (Exception e) {
@@ -62,17 +52,7 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 				
 				ResultSet r = comando.executeQuery();
 				while (r.next()) {
-					Date dtCadastro = null;
-					Date dtModificacao = null;
-					Timestamp tsCadastro = r.getTimestamp(5);
-					Timestamp tsModificacao = r.getTimestamp(6);
-					if(tsCadastro != null)
-						dtCadastro = new Date(tsCadastro.getTime());
-					if(tsModificacao != null)
-						dtModificacao = new Date(tsModificacao.getTime());
-					Opcionais opcional = new Opcionais(r.getInt(1), r.getString(2),
-							r.getDouble(3), r.getBoolean(4), dtCadastro,
-							dtModificacao);
+					Opcionais opcional = getOpcionalFromResultSet(r);
 
 					list.add(opcional);
 				}
@@ -101,11 +81,7 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 
 				ResultSet r = comando.executeQuery();
 				while (r.next()) {
-					Opcionais opcional = new Opcionais(r.getInt(1), r.getString(2),
-							r.getDouble(3), r.getBoolean(4), new Date(r.getTimestamp(5).getTime()),
-							new Date(r.getTimestamp(6).getTime()));
-
-					list.add(opcional);
+					list.add(getOpcionalFromResultSet(r));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -120,6 +96,26 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 
 		}
 		return null;
+	}
+	/**
+	 * 
+	 * @param r Result Set que será lido para construir o opcional
+	 * @return Opcional do resultset
+	 * @throws SQLException
+	 */
+	private Opcionais getOpcionalFromResultSet(ResultSet r) throws SQLException {
+		Date dtCadastro = null;
+		Date dtModificacao = null;
+		Timestamp tsCadastro = r.getTimestamp(5);
+		Timestamp tsModificacao = r.getTimestamp(6);
+		if(tsCadastro != null)
+			dtCadastro = new Date(tsCadastro.getTime());
+		if(tsModificacao != null)
+			dtModificacao = new Date(tsModificacao.getTime());
+		Opcionais opcional = new Opcionais(r.getInt(1), r.getString(2),
+				r.getDouble(3), r.getBoolean(4), dtCadastro,
+				dtModificacao);
+		return opcional;
 	}
 	
 	@Override

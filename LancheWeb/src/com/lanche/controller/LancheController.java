@@ -1,5 +1,7 @@
 package com.lanche.controller;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.lanche.boundary.dao.LancheDAO;
@@ -26,6 +28,27 @@ public class LancheController {
 		dao.delete(id);
 		
 		return true;
+	}
+	public void updateOpcionaisDoLanche(int idLanche, String idOpcionais) {
+		String[] idOpcionaisAux = idOpcionais.split(",");
+		ArrayList<Integer> idsOpcionais = new ArrayList<Integer>();
+		for (int i = 0; i < idOpcionaisAux.length; i++) {
+			try{
+				idsOpcionais.add(Integer.parseInt(idOpcionaisAux[i]));
+			}catch(NumberFormatException e){
+				
+			}
+			
+		}
+		
+		LancheDAO dao = new LancheDAO();
+		try {
+			dao.updateOpcionais(idLanche,idsOpcionais);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

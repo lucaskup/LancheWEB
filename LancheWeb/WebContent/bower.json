@@ -30,6 +30,7 @@
     "paper-dialog": "PolymerElements/paper-dialog#^1.0.0",
     "neon-animation": "PolymerElements/neon-animation#^1.0.0",
     "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.0",
-    "paper-menu": "PolymerElements/paper-menu#~1.0.1"
+    "paper-menu": "PolymerElements/paper-menu#~1.0.1",
+    "paper-dialog-scrollable": "PolymerElements/paper-dialog-scrollable#~1.0.1"
   }
 }

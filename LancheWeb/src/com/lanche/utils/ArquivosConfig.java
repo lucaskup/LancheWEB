@@ -21,6 +21,9 @@ public final class ArquivosConfig {
 	public static final String lancheUpdate = "UPDATE lanche.lanche SET descricao = ?, preco = ?, ativo = ? WHERE idLanche = ?";
 	public static final String lancheDelete = "DELETE FROM lanche.lanche WHERE idLanche = ?";
 	
+	public static final String lancheInsertOpcional = "INSERT INTO lanche.lanchexopcionais (fkLanche, fkOpcionais) VALUES (?, ?)";
+	public static final String lancheDeleteOpcional = "DELETE FROM lanche.lanchexopcionais WHERE fkLanche = ? AND fkOpcionais = ?";
+	
 	public static final String pedidoSearchByID = "SELECT p.idPedido, p.dtCriacao, p.status, u.idUsuario, u.login, u.nome, u.sobrenome, u.dataNascimento, u.turma, u.funcao, u.password, u.ativo FROM lanche.pedido p JOIN lanche.usuario u ON p.fkUsuario = u.idUsuario WHERE p.idPedido = ?";
 	public static final String pedidoInsert = "INSERT INTO lanche.pedido (fkUsuario, dtCriacao, status) VALUES (?, ?, ?)";
 	public static final String pedidoUpdate = "UPDATE lanche.pedido SET fkUsuario = ?, dtCriacao = ?, status = ? WHERE idPedido = ?";

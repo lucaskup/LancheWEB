@@ -2,7 +2,7 @@ package com.lanche.entity;
 
 import java.util.Date;
 
-public class Opcionais {
+public class Opcionais implements Comparable<Opcionais> {
 	private int id;
 	private String descricao;
 	private double precoAdicional;
@@ -65,7 +65,19 @@ public class Opcionais {
 	public void setDtModificacao(Date dtModificacao) {
 		this.dtModificacao = dtModificacao;
 	}
-	
+	@Override
+	public int compareTo(Opcionais o) {
+		return this.getDescricao().compareToIgnoreCase(o.getDescricao());
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null)
+			return this==null;
+		else if(obj instanceof Opcionais)
+			return ((Opcionais) obj).getId() == this.getId();
+		else
+			return super.equals(obj);
+	}
 	
 
 }

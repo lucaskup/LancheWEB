@@ -1,6 +1,8 @@
 package com.lanche.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 public class Lanche {
 	private int id;
@@ -9,20 +11,23 @@ public class Lanche {
 	private Date dtCadastro;
 	private Date dtModificacao;
 	private boolean ativo;
+	private ArrayList<Opcionais> opcionais;
 	
-
+	public Lanche() {
+		opcionais = new ArrayList<Opcionais>();
+	}
 	public Lanche(int id, String descricao, double preco, Date dtCadastro,
 			Date dtModificacao, boolean ativo) {
-		super();
+		this();
 		this.id = id;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.dtCadastro = dtCadastro;
 		this.dtModificacao = dtModificacao;
-		this.ativo = ativo;
+		this.ativo = ativo;	
 	}
 	public Lanche(int id) {
-		this.id = id;
+		this(id, null, 0, null, null, false);
 	}
 	public Lanche(int id, String descricao, double preco, boolean ativo) {
 		this(id, descricao, preco, null, null, ativo);
@@ -62,6 +67,26 @@ public class Lanche {
 	}
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	public ArrayList<Opcionais> getOpcionais() {
+		return opcionais;
+	}
+	public void setOpcionais(ArrayList<Opcionais> opcionais) {
+		this.opcionais = opcionais;
+	}
+	public boolean possuiOpcionais(){
+		return opcionais.size()>0;
+	}
+	public String getCSVIdOpcionais(){
+		String csv = new String();
+	for (int i = 0; i < opcionais.size(); i++) {
+		csv += opcionais.get(i).getId();
+		if(i+1<opcionais.size())
+			csv+=",";
+	}
+		
+		
+		return csv;
 	}
 	
 	

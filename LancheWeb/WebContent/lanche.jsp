@@ -1,7 +1,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.List, com.lanche.controller.LancheController, java.text.DecimalFormat, java.text.DecimalFormatSymbols , com.lanche.entity.*" %>
+<%@ page import="java.util.List,com.lanche.controller.OpcionaisController, com.lanche.controller.LancheController, java.text.DecimalFormat, java.text.DecimalFormatSymbols , com.lanche.entity.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +29,7 @@
   <link rel="import" href="bower_components/paper-fab/paper-fab.html">
   
   <link rel="import" href="bower_components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
   <link rel="import" href="bower_components/neon-animation/neon-animations.html">
   <link rel="import" href="bower_components/paper-button/paper-button.html">
 
@@ -121,13 +122,15 @@
 			    <td class="td_numeric"><%=df.format(lanche.getPreco())%></td>
 			    <td class="td_datetime"><%=dtCriacao%></td>
 			    <td class="td_datetime"><%=dtModificacao%></td> 
+
 			    <td class="td_logic"><%if(lanche.isAtivo()){
 			    	%><iron-icon icon="check"></iron-icon></td><%
 			    }else{
 			    	 %><iron-icon icon="close"></iron-icon></td><%
 			    }
 			    %> 
-			    <td class="td_icons"><paper-icon-button onclick="dialogoEdicao('<%=lanche.getId()%>')" icon="create"></paper-icon-button><paper-icon-button onclick="dialogoExclusao('<%=lanche.getId()%>')" icon="delete"></paper-icon-button></td>
+			    <td class="td_icons_lanche"><paper-icon-button onclick="dialogoOpcionais('<%=lanche.getId()%>')" icon="<%=lanche.possuiOpcionais() ? "info" : "info-outline"%>"></paper-icon-button><paper-icon-button onclick="dialogoEdicao('<%=lanche.getId()%>')" icon="create"></paper-icon-button><paper-icon-button onclick="dialogoExclusao('<%=lanche.getId()%>')" icon="delete"></paper-icon-button></td>
+			    <td class="td_hidden"><%=lanche.getCSVIdOpcionais()%></td>
 			  </tr>
 			  
 		  <%  
@@ -180,7 +183,6 @@
 	</div>
 	</paper-dialog>
  
-
 	<paper-dialog modal class="dialogo-lanche" id="criar" with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
 	<h2>Criar Lanche</h2>
 	<form is="iron-form" id="formCriar" method="post" action="/LancheWeb/LancheServlet">
@@ -211,7 +213,61 @@
  		<input type="hidden" value="DELETE" name="METHOD">
  		<input type="hidden" value="0" name="id" id="dxh_id">
  	</form>
+ 	 <form method="post" id="formOpcionais" action="/LancheWeb/LancheServlet">
+ 		<input type="hidden" value="OPCIONAIS" name="METHOD">
+ 		<input type="hidden" value="0" name="id" id="doh_id">
+ 		<input type="hidden" value="0" name="idOpcionais" id="doh_opcionais">
+ 	</form>
 
+	<paper-dialog modal class="dialogo-lanche-op" id="opcionais"  with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation" >
+	    <h2>Opcionais</h2>
+	    <paper-dialog-scrollable>
+	    <div>
+	    
+	    <table id="tabela_op">
+
+		  <thead>
+		  <tr>
+		    <th>Selecionado</th>
+		    <th>Descrição</th> 
+		    <th>Preço</th>
+		  </tr>
+		  </thead>
+		  <tbody>
+		   <%
+		  OpcionaisController co = new OpcionaisController();
+		  List<Opcionais> lo = co.getAll();
+		  lo.sort(null);
+		  
+		  for(Opcionais opcional: lo){
+			  
+			 
+			  DecimalFormatSymbols custom = new DecimalFormatSymbols();
+			  custom.setDecimalSeparator('.');
+			  
+			  DecimalFormat df = new DecimalFormat("#0.00");
+			  df.setDecimalFormatSymbols(custom);
+		  %>		  
+		  <tr>
+		  	<td class="td_hidden"><%=opcional.getId()%></td>
+		    <td class="td_logic"><paper-checkbox></paper-checkbox></td>
+		    <td class="td_alpha"><%=opcional.getDescricao()%></td> 
+		    <td class="td_numeric"><%=df.format(opcional.getPrecoAdicional())%></td>
+		  </tr>
+		  <%  
+		  }
+		  %>
+		  </tbody>
+		</table> 
+	    
+		    
+		</div>
+		</paper-dialog-scrollable>
+	<div class="buttons">
+	      <paper-button class="dialogo" dialog-dismiss>Cancelar</paper-button>
+	      <paper-button class="dialogo" dialog-confirm autofocus onclick="editarOpcionaisLanche()">Confirmar</paper-button>
+	</div>
+	</paper-dialog>
  <script>
 
 	var idExcluir = 0;
@@ -251,6 +307,36 @@
  	      }
  	}
  	
+ 	function dialogoOpcionais(id){
+ 		idEditar = id;
+ 		var dialog = document.getElementById('opcionais');
+    	var tabela = document.getElementById('tabela');
+    	var tabelaDeOpcionais = document.getElementById('tabela_op');
+    	
+    	//Limpa todos os checkbox pois eles podem estar checados da outra vez
+		for (var k = 0, rowOpcional; rowOpcional = tabelaDeOpcionais.rows[k]; k++) {
+			rowOpcional.cells[1].firstChild.checked = false;
+		}
+    	
+		for (var i = 0, row; row = tabela.rows[i]; i++) {
+			if(row.cells[0].innerHTML==id){
+				var opcionais = row.cells[7].innerHTML.split(",");
+				//para cada opcional varre toda a tabela
+				for (var j = 0; j < opcionais.length; j++) {
+					for (var k = 0, rowOpcional; rowOpcional = tabelaDeOpcionais.rows[k]; k++) {
+						if(rowOpcional.cells[0].innerHTML==opcionais[j]){
+							rowOpcional.cells[1].firstChild.checked = true;
+						}
+					}
+				}
+			}
+		}
+ 		
+		if (dialog) {
+		dialog.open();
+		}
+ 	}
+ 	
  	function criarLanche(event){
  		
     	document.getElementById('dc_descricao').validate();
@@ -281,8 +367,6 @@
     	if(!document.getElementById('de_descricao').invalid && !document.getElementById('de_preco').invalid ){
     		document.getElementById('formEditar').submit();	
     	}
- 		
- 		
  	}
 
  	function excluirLanche(){
@@ -290,6 +374,28 @@
  		if(!dialog.closingReason.canceled){
  			document.getElementById('dxh_id').value=idExcluir;
  			document.getElementById('formExcluir').submit();	
+        }
+ 	}
+ 	
+ 	function editarOpcionaisLanche(){
+ 		var tabelaDeOpcionais = document.getElementById('tabela_op');
+ 		var dialog = document.getElementById('opcionais');
+ 		var opcionais;
+ 		
+		for (var k = 0, rowOpcional; rowOpcional = tabelaDeOpcionais.rows[k]; k++) {
+			if(rowOpcional.cells[1].firstChild.checked){
+				if(opcionais){
+					opcionais += "," + rowOpcional.cells[0].innerHTML;
+				}else{
+					opcionais = rowOpcional.cells[0].innerHTML;
+				}
+			} 
+		}
+ 		
+ 		if(!dialog.closingReason.canceled){
+ 			document.getElementById('doh_id').value=idEditar;
+ 			document.getElementById('doh_opcionais').value=opcionais;
+ 			document.getElementById('formOpcionais').submit();	
         }
  	}
 

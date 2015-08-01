@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.lanche.entity.Lanche;
+import com.lanche.entity.Opcionais;
 import com.lanche.utils.ArquivosConfig;
 
 public class LancheDAO extends DAO<Lanche> {
@@ -15,12 +17,11 @@ public class LancheDAO extends DAO<Lanche> {
 	@Override
 	public Lanche searchByID(int id) {
 		if (openConnection()) {
+			OpcionaisDAO dao = new OpcionaisDAO();
 			Lanche lanche = null;
-			try {
-				
+			try {				
 				comando = con.prepareStatement(ArquivosConfig.lancheSearchByID);
 				comando.setInt(1, id);
-
 				ResultSet r = comando.executeQuery();
 				
 				if (r.next()){
@@ -36,6 +37,8 @@ public class LancheDAO extends DAO<Lanche> {
 					lanche = new Lanche(r.getInt(1), r.getString(2),
 							r.getDouble(3), dtCadastro,
 							dtModificacao, r.getBoolean(6));
+					
+					lanche.setOpcionais(dao.searchByLanche(lanche.getId()));
 				}
 					
 			} catch (Exception e) {
@@ -74,6 +77,8 @@ public class LancheDAO extends DAO<Lanche> {
 							r.getDouble(3), dtCadastro, //r.getDate(4),
 							dtModificacao,r.getBoolean(6));
 
+					OpcionaisDAO op = new OpcionaisDAO();
+					lanche.setOpcionais(op.searchByLanche(lanche.getId()));
 					list.add(lanche);
 				}
 			} catch (Exception e) {
@@ -161,6 +166,43 @@ public class LancheDAO extends DAO<Lanche> {
 			comando.setInt(4, t.getId());
 			
 			comando.executeUpdate();	
+		}
+		
+	}
+
+	public void updateOpcionais(int idLanche, ArrayList<Integer> idsOpcionais) throws SQLException {
+		Lanche lanche = searchByID(idLanche);
+		
+		for (Opcionais opcional : lanche.getOpcionais()) {
+			if(!idsOpcionais.contains(opcional.getId())){
+				removeOpcionalFromLanche(idLanche,opcional.getId());
+			}
+		}
+		
+		for (Integer idOpcional : idsOpcionais) {
+			if(!lanche.getOpcionais().contains(new Opcionais(idOpcional))){
+				addOpcionalFromLanche(idLanche,idOpcional);
+			}
+		}
+		
+	}
+
+	private void addOpcionalFromLanche(int idLanche, int idOpcional) throws SQLException {
+		if(openConnection()){
+			comando = con.prepareStatement(ArquivosConfig.lancheInsertOpcional);
+			comando.setInt(1, idLanche);
+			comando.setInt(2, idOpcional);
+			comando.executeUpdate();
+		}
+		
+	}
+
+	private void removeOpcionalFromLanche(int idLanche, int idOpcional) throws SQLException {
+		if(openConnection()){
+			comando = con.prepareStatement(ArquivosConfig.lancheDeleteOpcional);
+			comando.setInt(1, idLanche);
+			comando.setInt(2, idOpcional);
+			comando.executeUpdate();
 		}
 		
 	}

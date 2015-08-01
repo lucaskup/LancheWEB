@@ -36,11 +36,29 @@
     width: 26px;
     height: 26px;
     }
+
   
   iron-icon[icon="close"] {
     color: #F44336;
     width: 26px;
     height: 26px;
+    }
+  iron-icon[icon="error"] {
+    color: red;
+    width: 40px;
+    height: 40px;
+    }
+  paper-icon-button[icon="create"]{
+    color: #A3A3A3;
+    }
+  paper-icon-button[icon="delete"]{
+    color: #A3A3A3;
+    }
+  paper-icon-button[icon="info-outline"]{
+    color: #A3A3A3;
+    }
+  paper-icon-button[icon="info"]{
+    color: #A3A3A3;
     }
   paper-material{
   	background-color: white;
@@ -64,12 +82,7 @@
   	width: 400px;
   	min-width: 400px;
   	}
-  paper-icon-button[icon="create"]{
-    color: #A3A3A3;
-    }
-  paper-icon-button[icon="delete"]{
-    color: #A3A3A3;
-    }
+
 
 
   paper-fab.red {
@@ -98,6 +111,17 @@
 		width: 400px;
 		max-height: 400px;
     }
+    
+   html /deep/ paper-dialog.dialogo-lanche-op {
+
+		width: 500px;
+		
+    }
+   paper-dialog.dialogo-lanche-op {
+
+		width: 500px;
+
+    } 
     
    html /deep/ paper-dialog.dialogo-aluno {
 		height: 620px;
@@ -145,6 +169,10 @@
 	text-align: center;
 	width: 85px;
 	}
+	.td_icons_lanche{
+	text-align: center;
+	width: 127px;
+	}
 	.td_date{
 	text-align: center;
 	width: 50px;
@@ -156,6 +184,9 @@
 	.td_funcao{
 	text-align: center;
 	width: 90px;
+	}
+	.td_hidden{
+	display: none;
 	}
 
   .horizontal-section-container {
