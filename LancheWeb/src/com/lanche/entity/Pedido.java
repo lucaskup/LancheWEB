@@ -107,7 +107,16 @@ public class Pedido {
 		if(getUsuario() == null)
 			return "Balcão";
 		return getUsuario().getNome().trim()+" "+getUsuario().getSobrenome().trim();
-				
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null || !(obj instanceof Pedido)){
+			return super.equals(obj);
+		}
+		
+		return this.getId() == ((Pedido)obj).getId();
+		
+		
 	}
 
 

@@ -17,6 +17,37 @@ import com.lanche.entity.Pedido;
 import com.lanche.entity.enums.Status;
 
 public class PedidoController {
+	
+	public List<Pedido> getAll(boolean exibirApenasHoje, boolean exibirCadastrado, boolean exibirFazendo, boolean exibirPronto){
+		PedidoDAO dao = new PedidoDAO();
+		List<Pedido> lista = new ArrayList<Pedido>();
+		if(exibirApenasHoje){
+			lista = dao.getAllFromToday();
+		}else{
+			lista = dao.getAll();
+		}
+		ArrayList<Pedido> ret = new ArrayList<Pedido>();
+		for (Pedido pedido : lista) {
+			switch (pedido.getStatus()) {
+			case CADASTRADO:
+				if(exibirCadastrado)
+					ret.add(pedido);
+				break;
+			case FAZENDO:
+				if(exibirFazendo)
+					ret.add(pedido);
+				break;
+			case PRONTO:
+				if(exibirPronto)
+					ret.add(pedido);
+				break;
+			default:
+				break;
+			}
+		}
+		return ret;
+	}
+	
 	public List<Pedido> getAll(){
 		PedidoDAO dao = new PedidoDAO();
 		return dao.getAll();

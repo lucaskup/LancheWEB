@@ -38,9 +38,6 @@
   <link rel="import" href="bower_components/paper-card/paper-card.html">
 
 
-  <link rel="import" href="bower_components/paper-toggle-button/paper-toggle-button.html">
-  
-
   <link rel="import" href="bower_components/paper-input/paper-input-error.html">
   <link rel="import" href="bower_components/paper-input/paper-input.html">
   <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
@@ -85,22 +82,31 @@
 		   List<Pedido> l = null;
 		   Cookie cookie = null;
   		   Cookie[] cookies = null;
-  		   boolean exibirTodos = false;
+  		   boolean exibirApenasHoje = true;
+  		   boolean exibirPronto = true;
+  		   boolean exibirFazendo = true;
+  	       boolean exibirCadastrado = true;
   		   // Get an array of Cookies associated with this domain
   		   cookies = request.getCookies();
   		   if( cookies != null ){
   		      for (int i = 0; i < cookies.length; i++){
   		    	cookie = cookies[i];
-  		    	if(cookie.getName().equals("todospedidos") && cookie.getValue( ).equals("1")){
-  		    		exibirTodos = true;
+  		    	if(cookie.getName().equals("conf_apenas_hoje") && cookie.getValue( ).equals("0")){
+  		    		exibirApenasHoje = false;
+  		    	}
+  		    	if(cookie.getName().equals("conf_visualiza_pronto") && cookie.getValue( ).equals("0")){
+  		    		exibirPronto = false;
+  		    	}
+  		    	if(cookie.getName().equals("conf_visualiza_fazendo") && cookie.getValue( ).equals("0")){
+  		    		exibirFazendo = false;
+  		    	}
+  		    	if(cookie.getName().equals("conf_visualiza_cadastrado") && cookie.getValue( ).equals("0")){
+  		    		exibirCadastrado = false;
   		    	}
   		      }
   		  }
-  		   if(exibirTodos){
-  			   l = c.getAll();
-  		   }else{
-  			   l = c.getAllToday();
-  		   }
+  		 l = c.getAll(exibirApenasHoje,exibirCadastrado,exibirFazendo,exibirPronto);
+  		   
   		   %>
   </paper-header-panel>
   
@@ -108,8 +114,7 @@
   <paper-toolbar>
     <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
     <span class="title">Lanches WEB</span>
-    <paper-toggle-button id="todospedidos" class="blue" <%=exibirTodos ? "checked":" "%>></paper-toggle-button>
-    <paper-tooltip for="todospedidos"><%=exibirTodos ? "Exibindo todos Pedidos":"Exibindo somente Pedidos de hoje"%></paper-tooltip>
+	<paper-icon-button icon="icons:filter-list" onclick="abreMenuVisualiza()"></paper-icon-button>
   </paper-toolbar>
 
   <div class="cards_centered">
@@ -136,7 +141,7 @@
 			  			  
 		  %>
 		  
-	<paper-card primeiroEstagio" elevation=2>
+	<paper-card class="primeiroEstagio" elevation=2>
       <div class="card-content <%=pedido.getStatus() == Status.PRONTO ? "titulo_card_pronto" : pedido.getStatus() == Status.FAZENDO ? "titulo_card_fazendo" : "titulo_card_cadastrado"%>">
       	<iron-icon id="icone<%=pedido.getId()%>" icon="<%=pedido.getUsuario() == null ? "hardware:laptop" :"hardware:phone-android"%>" style="margin-right:7px;"></iron-icon>Pedido <%=pedido.getNumPedido()%> (<%=pedido.getStatus().toString()%>)
       </div>
@@ -184,22 +189,53 @@
  		<input type="hidden" value="0" name="id" id="doh_id">
  	</form>
 
+	<paper-dialog modal id="dialogo-pedido-conf"  with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation" >
+	    <h2>Ver Pedidos</h2>
+		<paper-checkbox id="conf_visualiza_pronto" <%=exibirPronto ? "checked":" "%> class="green_v">Pronto</paper-checkbox><br>
+		<paper-checkbox id="conf_visualiza_fazendo" <%=exibirFazendo ? "checked":" "%> class="orange_v">Fazendo</paper-checkbox><br>
+		<paper-checkbox id="conf_visualiza_cadastrado" <%=exibirCadastrado ? "checked":" "%> class="red_v">Cadastrado</paper-checkbox><br>
+		<paper-checkbox id="conf_apenas_hoje" <%=exibirApenasHoje ? "checked":" "%>>Apenas pedidos feitos hoje</paper-checkbox>
+		<div class="buttons">
+		      <paper-button class="dialogo" dialog-dismiss>Cancelar</paper-button>
+		      <paper-button class="dialogo" dialog-confirm autofocus onclick="salvaCookiesRecarregaPagina()">Confirmar</paper-button>
+		</div>
+	</paper-dialog>
+
+
 	
  <script>
-	document.getElementById('todospedidos').addEventListener('change', function(event) {
-		 if(document.getElementById('todospedidos').checked){
-			 setCookie("todospedidos",1,7);
-		 }else{
-			 setCookie("todospedidos",0,7);
-		 }
-		 location.reload();
-	});
 	function setCookie(cname, cvalue, exdays) {
 	    var d = new Date();
 	    d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	    var expires = "expires="+d.toUTCString();
 	    document.cookie = cname + "=" + cvalue + "; " + expires;
 	}
+	function salvaCookiesRecarregaPagina(){	
+		 if(document.getElementById('conf_visualiza_pronto').checked){
+			 setCookie("conf_visualiza_pronto",1,7);
+		 }else{
+			 setCookie("conf_visualiza_pronto",0,7);
+		 }
+		 if(document.getElementById('conf_visualiza_fazendo').checked){
+			 setCookie("conf_visualiza_fazendo",1,7);
+		 }else{
+			 setCookie("conf_visualiza_fazendo",0,7);
+		 }
+		 if(document.getElementById('conf_visualiza_cadastrado').checked){
+			 setCookie("conf_visualiza_cadastrado",1,7);
+		 }else{
+			 setCookie("conf_visualiza_cadastrado",0,7);
+		 }
+		 if(document.getElementById('conf_apenas_hoje').checked){
+			 setCookie("conf_apenas_hoje",1,7);
+		 }else{
+			 setCookie("conf_apenas_hoje",0,7);
+		 }
+		 
+		 location.reload();
+	}
+		
+	
 
 	var idExcluir = 0;
 	var idEditar = 0;
@@ -213,6 +249,12 @@
 	}
  	function criarPedido(){
  		document.getElementById('formCriarPed').submit();
+ 	}
+ 	function abreMenuVisualiza(){
+ 		var dialog = document.getElementById('dialogo-pedido-conf');
+		if (dialog) {
+			dialog.open();
+		}
  	}
 
 
