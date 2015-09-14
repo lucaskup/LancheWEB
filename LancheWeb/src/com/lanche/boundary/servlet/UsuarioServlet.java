@@ -3,7 +3,6 @@ package com.lanche.boundary.servlet;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;

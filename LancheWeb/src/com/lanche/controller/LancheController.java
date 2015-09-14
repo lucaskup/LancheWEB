@@ -13,6 +13,10 @@ public class LancheController {
 		LancheDAO dao = new LancheDAO();
 		return dao.getAll();
 	}
+	public List<Lanche> getAtivos(){
+		LancheDAO dao = new LancheDAO();
+		return dao.getAtivos();
+	}
 	public boolean createOrUpdateLanche(Lanche l){
 		LancheDAO dao = new LancheDAO();
 		

@@ -1,7 +1,8 @@
 package com.lanche.entity.enums;
 
 public enum Status {
-	FAZENDO(1), PRONTO(2), RETIRADO(3);
+	
+	CADASTRADO(0), FAZENDO(1), PRONTO(2), RETIRADO(3);
 	
 	private final int status;
 
@@ -15,6 +16,8 @@ public enum Status {
 	public static Status getStatus (int status)
 	{
 		switch (status) {
+		case 0:
+			return CADASTRADO;
 		case 1:
 			return FAZENDO;
 		case 2:

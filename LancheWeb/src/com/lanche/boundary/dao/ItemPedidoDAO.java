@@ -2,10 +2,12 @@ package com.lanche.boundary.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.lanche.entity.ItemPedido;
 import com.lanche.entity.Lanche;
+import com.lanche.entity.Pedido;
 import com.lanche.utils.ArquivosConfig;
 
 public class ItemPedidoDAO extends DAO<ItemPedidoDAO> {
@@ -59,6 +61,41 @@ public class ItemPedidoDAO extends DAO<ItemPedidoDAO> {
 	public boolean persist(ItemPedidoDAO t) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public void persist(Pedido t) {
+		if(openConnection()){
+			try {
+				comando = con.prepareStatement(ArquivosConfig.itemPedidoInsert,Statement.RETURN_GENERATED_KEYS);
+				//numItem, fkLanche, fkPedido, quantidade
+				for (ItemPedido item : t.getItens()) {
+
+					comando.setInt(1, item.getNumItem());
+					comando.setInt(2, item.getLanche().getId());
+					comando.setInt(3, t.getId());
+					comando.setInt(4, item.getQuantidade());
+					
+					
+					if(comando.executeUpdate()>0){
+						ResultSet r = comando.getGeneratedKeys();
+						if(r.next())
+							item.setId(r.getInt(1));
+					}
+					
+					if(item.getOpcionais().size()>0){
+						OpcionaisDoItemDAO dao = new OpcionaisDoItemDAO();
+						dao.persist(item);
+					}
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+		}
+
+		
 	}
 
 }

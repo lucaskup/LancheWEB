@@ -2,7 +2,6 @@ package com.lanche.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
 public class Lanche {
 	private int id;
@@ -32,6 +31,7 @@ public class Lanche {
 	public Lanche(int id, String descricao, double preco, boolean ativo) {
 		this(id, descricao, preco, null, null, ativo);
 	}
+
 	public int getId() {
 		return id;
 	}

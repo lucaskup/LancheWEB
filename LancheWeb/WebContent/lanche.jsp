@@ -46,7 +46,7 @@
 
 </head>
 
-<body>
+<body onload="animacaoEntrada()">
 <paper-drawer-panel id="paperDrawerPanel" force-narrow="true">
   <paper-header-panel drawer mode="waterfall">
    
@@ -57,6 +57,9 @@
    
     <div>
     <paper-menu class="list">
+    <a href="/LancheWeb/pedido.jsp">
+          <paper-item>Pedidos</paper-item>
+    </a>
     <a href="/LancheWeb/lanche.jsp">
           <paper-item>Lanches</paper-item>
     </a>
@@ -71,12 +74,11 @@
 	</div>
   </paper-header-panel>
   
-  <paper-header-panel main mode="waterfall">
+  <paper-header-panel main mode="standard">
   <paper-toolbar>
     <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
     <span class="title">Lanches WEB</span>
   </paper-toolbar>
-
 
 	<paper-material elevation="2" class="paper-material-lanche">
 		<h3 style="padding-left: 10px; padding-top: 10px">Lanches</h3>
@@ -113,7 +115,7 @@
 			  DecimalFormatSymbols custom = new DecimalFormatSymbols();
 			  custom.setDecimalSeparator('.');
 			  
-			  DecimalFormat df = new DecimalFormat("#.00");
+			  DecimalFormat df = new DecimalFormat("#0.00");
 			  df.setDecimalFormatSymbols(custom);
 		  %>
 			  <tr>
@@ -140,6 +142,7 @@
 		  </tbody>
 		</table> 
 	</paper-material>
+	
 </paper-header-panel>
 </paper-drawer-panel>
 

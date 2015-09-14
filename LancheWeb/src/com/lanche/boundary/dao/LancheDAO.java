@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.lanche.entity.Lanche;
 import com.lanche.entity.Opcionais;
 import com.lanche.utils.ArquivosConfig;
@@ -17,7 +15,6 @@ public class LancheDAO extends DAO<Lanche> {
 	@Override
 	public Lanche searchByID(int id) {
 		if (openConnection()) {
-			OpcionaisDAO dao = new OpcionaisDAO();
 			Lanche lanche = null;
 			try {				
 				comando = con.prepareStatement(ArquivosConfig.lancheSearchByID);
@@ -25,20 +22,7 @@ public class LancheDAO extends DAO<Lanche> {
 				ResultSet r = comando.executeQuery();
 				
 				if (r.next()){
-					Date dtCadastro = null;
-					Date dtModificacao = null;
-					Timestamp tsCadastro = r.getTimestamp(4);
-					Timestamp tsModificacao = r.getTimestamp(5);
-					if(tsCadastro != null)
-						dtCadastro = new Date(tsCadastro.getTime());
-					if(tsModificacao != null)
-						dtModificacao = new Date(tsModificacao.getTime());
-					
-					lanche = new Lanche(r.getInt(1), r.getString(2),
-							r.getDouble(3), dtCadastro,
-							dtModificacao, r.getBoolean(6));
-					
-					lanche.setOpcionais(dao.searchByLanche(lanche.getId()));
+					lanche = getLancheFromResultSet(r);
 				}
 					
 			} catch (Exception e) {
@@ -64,21 +48,7 @@ public class LancheDAO extends DAO<Lanche> {
 				comando = con.prepareStatement(ArquivosConfig.lancheSearchAll);
 				ResultSet r = comando.executeQuery();
 				while (r.next()) {
-					Date dtCadastro = null;
-					Date dtModificacao = null;
-					Timestamp tsCadastro = r.getTimestamp(4);
-					Timestamp tsModificacao = r.getTimestamp(5);
-					if(tsCadastro != null)
-						dtCadastro = new Date(tsCadastro.getTime());
-					if(tsModificacao != null)
-						dtModificacao = new Date(tsModificacao.getTime());
-					
-					Lanche lanche = new Lanche(r.getInt(1), r.getString(2),
-							r.getDouble(3), dtCadastro, //r.getDate(4),
-							dtModificacao,r.getBoolean(6));
-
-					OpcionaisDAO op = new OpcionaisDAO();
-					lanche.setOpcionais(op.searchByLanche(lanche.getId()));
+					Lanche lanche = getLancheFromResultSet(r);
 					list.add(lanche);
 				}
 			} catch (Exception e) {
@@ -93,6 +63,49 @@ public class LancheDAO extends DAO<Lanche> {
 			return list;
 		}
 		return null;
+	}
+	
+	public ArrayList<Lanche> getAtivos(){
+		if (openConnection()) {
+			ArrayList<Lanche> list = new ArrayList<Lanche>();
+			try {
+				comando = con.prepareStatement(ArquivosConfig.lancheSearchAtivos);
+				ResultSet r = comando.executeQuery();
+				while (r.next()) {
+					Lanche lanche = getLancheFromResultSet(r);
+					list.add(lanche);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return list;
+		}
+		return null;
+	}
+
+	private Lanche getLancheFromResultSet(ResultSet r) throws SQLException {
+		Date dtCadastro = null;
+		Date dtModificacao = null;
+		Timestamp tsCadastro = r.getTimestamp(4);
+		Timestamp tsModificacao = r.getTimestamp(5);
+		if(tsCadastro != null)
+			dtCadastro = new Date(tsCadastro.getTime());
+		if(tsModificacao != null)
+			dtModificacao = new Date(tsModificacao.getTime());
+		
+		Lanche lanche = new Lanche(r.getInt(1), r.getString(2),
+				r.getDouble(3), dtCadastro, //r.getDate(4),
+				dtModificacao,r.getBoolean(6));
+
+		OpcionaisDAO op = new OpcionaisDAO();
+		lanche.setOpcionais(op.searchByLanche(lanche.getId()));
+		return lanche;
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.lanche.entity.ItemPedido;
 import com.lanche.entity.Opcionais;
 import com.lanche.entity.OpcionaisDoItem;
 import com.lanche.utils.ArquivosConfig;
@@ -57,6 +58,28 @@ public class OpcionaisDoItemDAO extends DAO<OpcionaisDoItem> {
 
 		}
 		return null;
+	}
+
+	public void persist(ItemPedido item) {
+		if(openConnection()){
+			try {
+				comando = con.prepareStatement(ArquivosConfig.opcionaisItemPedidoInsert);
+				//fkItemPedido, fkOpcionais, quantidade
+				for (OpcionaisDoItem opcional : item.getOpcionais()) {
+
+					comando.setInt(1, item.getId());
+					comando.setInt(2, opcional.getOpcional().getId());
+					comando.setInt(3, opcional.getQuantidade());
+
+					comando.executeUpdate();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+		}
+		
 	}
 
 }

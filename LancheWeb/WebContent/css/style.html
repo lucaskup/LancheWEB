@@ -36,8 +36,6 @@
     width: 26px;
     height: 26px;
     }
-
-  
   iron-icon[icon="close"] {
     color: #F44336;
     width: 26px;
@@ -54,12 +52,80 @@
   paper-icon-button[icon="delete"]{
     color: #A3A3A3;
     }
+  paper-icon-button[icon="add-circle-outline"]{
+    color: #A3A3A3;
+    }
   paper-icon-button[icon="info-outline"]{
     color: #A3A3A3;
     }
   paper-icon-button[icon="info"]{
     color: #A3A3A3;
     }
+  paper-card{
+	margin: 10px;
+	max-width: 400px;
+    }
+  paper-card.pedido-left{
+	margin: 10px;
+	max-width: 45%;
+	float: left;
+    }
+  paper-card.pedido-right{
+	margin: 10px;
+	max-width: 45%;
+	
+    }
+  paper-card.red {
+  	--paper-card-header-color: #F44336;
+    }
+  paper-card.yellow {
+  	--paper-card-header-color: #FFAB00;
+    }
+  paper-card.green {
+  	--paper-card-header-color: #2E7D32;
+    }
+  div.titulo_card_pronto{
+    font-size: 23px;
+    font-weight: bold;
+    color: #2E7D32;
+    }
+  div.titulo_card_fazendo{
+    font-size: 23px;
+    font-weight: bold;
+    color: #FFAB00;
+    }  
+  div.titulo_card_cadastrado{
+    font-size: 23px;
+    font-weight: bold;
+    color: #F44336;
+    }
+    
+  div.card_total {
+    font-size: 22px;
+    padding: 4px;
+    color: var(--google-grey-500);
+    }
+
+  div.card_item {
+      font-size: 18px;
+      padding-bottom: 8px;
+    }
+  div.card_item_opcional {
+      font-size: 16px;
+      padding-bottom: 8px;
+      padding-left: 10px;
+    }
+  div.cards_centered {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    }
+  div.cards_centered_pedido {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    }
+    
   paper-material{
   	background-color: white;
   	margin-top: 24px;
@@ -69,7 +135,7 @@
   	max-width: 90%;
   	min-width: 50%;
   	}
-  	.paper-material-lanche{
+  .paper-material-lanche{
   	width: 900px;
   	}
   	.paper-material-opcional{
@@ -133,6 +199,13 @@
 		width: 400px;
 		max-height: 620px;
     }
+    
+    paper-toggle-button.blue {
+	    --paper-toggle-button-checked-bar-color:  var(--paper-light-blue-900);
+	    --paper-toggle-button-checked-button-color:  var(--paper-light-blue-700);
+	    --paper-toggle-button-checked-ink-color: var(--paper-light-blue-900);
+
+	  }
 
   table{
 	background-color:white;
@@ -222,14 +295,8 @@
   code {
     color: var(--google-grey-700);
   }
-  .card{
-  	padding: 24px;
-  	min-width:400px;
-  	max-width:1080px;
-  	margin-left: auto ;
-  	margin-right: auto ;
-  	
-  }
+  
+  
   a{
   text-decoration: none;
   font-family: font-family: 'Roboto', 'Noto', sans-serif;
@@ -240,6 +307,14 @@
   /* TODO: remove this hack and use horizontal-section-container instead */
   body > div.layout.horizontal.center-justified {
     @apply(--layout-wrap);
+  }
+
+  .primeiroEstagio{
+    margin-top: 2000px;
+    transition: ease-out 1.0s;
+  }
+  .segundoEstagio{
+    transition: ease-out 1.0s;
   }
   
 </style>

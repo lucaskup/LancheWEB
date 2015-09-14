@@ -10,14 +10,16 @@ public class ItemPedido {
 	private Lanche lanche;
 	private ArrayList<OpcionaisDoItem> opcionais;
 	
-	
+	public ItemPedido(){
+		opcionais = new ArrayList<OpcionaisDoItem>();
+	}
 	public ItemPedido(int id, int numItem, int quantidade, Lanche lanche) {
 		super();
 		this.id = id;
 		this.numItem = numItem;
 		this.quantidade = quantidade;
 		this.lanche = lanche;
-
+		opcionais = new ArrayList<OpcionaisDoItem>();
 	}
 
 
@@ -27,7 +29,7 @@ public class ItemPedido {
 	 */
 	public double getTotal(){
 		double preco = 0;
-		preco = lanche.getPreco();
+		preco = lanche.getPreco()*quantidade;
 		if(opcionais != null){
 			for (OpcionaisDoItem opcional : opcionais) {
 				preco += opcional.getOpcional().getPrecoAdicional()*opcional.getQuantidade();

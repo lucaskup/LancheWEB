@@ -38,11 +38,14 @@
   <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
   <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
   <link rel="import" href="bower_components/paper-menu/paper-menu.html">
-  <link rel="import" href="css/style.html">
+  <link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 
+  <link rel="import" href="bower_components/paper-item/paper-item.html">
+  
+  <link rel="import" href="css/style.html">
 </head>
 
-<body style="width: 100%">
+<body style="width: 100%" onload="animacaoEntrada()">
 
 <paper-drawer-panel id="paperDrawerPanel" force-narrow="true">
   <paper-header-panel drawer mode="waterfall">
@@ -54,6 +57,9 @@
    
     <div>
     <paper-menu class="list">
+    <a href="/LancheWeb/pedido.jsp">
+          <paper-item>Pedidos</paper-item>
+    </a>
     <a href="/LancheWeb/lanche.jsp">
           <paper-item>Lanches</paper-item>
     </a>
@@ -68,7 +74,7 @@
 	</div>
   </paper-header-panel>
   
-  <paper-header-panel main mode="waterfall">
+  <paper-header-panel main mode="standard">
 	<paper-toolbar>
     <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
     <span class="title">Lanches WEB</span>
@@ -139,7 +145,7 @@
   
 
 
-<paper-fab icon="add" title="Criar Novo Lanche" tabindex="0" class="red" onclick="dialogoCriar()"></paper-fab>
+<paper-fab icon="add" title="Criar Novo Usuário" tabindex="0" class="red" onclick="dialogoCriar()"></paper-fab>
 
 
     <paper-dialog id="excluir" modal with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
@@ -176,7 +182,7 @@
 			
 			<paper-input-container always-float-label>
 				<label>Data de Nascimento</label>
-				<input is="iron-input" id="de_dtnascimento" name="dtnascimento" required>
+				<input is="iron-input" id="de_dtnascimento" name="dtnascimento" required pattern="^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$">
 				<paper-input-error>Favor informar a Data de Nascimento!</paper-input-error>
 			</paper-input-container>
 			
@@ -233,8 +239,8 @@
 			
 			<paper-input-container always-float-label>
 				<label>Data de Nascimento</label>
-				<input is="iron-input" id="dc_dtnascimento" name="dtnascimento" required>
-				<paper-input-error>Favor informar a Data de Nascimento!</paper-input-error>
+				<input is="iron-input" id="dc_dtnascimento" name="dtnascimento" required pattern="^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$">
+				<paper-input-error>Favor informar a Data de Nascimento (DD/MM/YYYY)!</paper-input-error>
 			</paper-input-container>
 			
 			<paper-input-container>
@@ -256,7 +262,7 @@
 		</form>
 		<div class="buttons">
         <paper-button class="dialogo" dialog-dismiss>Cancelar</paper-button>
-        <paper-button class="dialogo" dialog-confirm autofocus onclick="criar()">Confirmar</paper-button>
+        <paper-button class="dialogo" autofocus onclick="criar()">Confirmar</paper-button>
 		</div>
     </paper-dialog>
  	<form method="post" id="formExcluir" action="/LancheWeb/OpcionaisServlet">
@@ -387,7 +393,6 @@
         }
  	}
  	
-
 
   </script>
 </body>

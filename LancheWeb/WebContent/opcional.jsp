@@ -46,7 +46,7 @@
 
 </head>
 
-<body >
+<body onload="animacaoEntrada()" >
 <paper-drawer-panel id="paperDrawerPanel" force-narrow="true">
   <paper-header-panel drawer mode="waterfall">
    
@@ -57,6 +57,9 @@
    
     <div>
     <paper-menu class="list">
+    <a href="/LancheWeb/pedido.jsp">
+          <paper-item>Pedidos</paper-item>
+    </a>
     <a href="/LancheWeb/lanche.jsp">
           <paper-item>Lanches</paper-item>
     </a>
@@ -71,7 +74,7 @@
 	</div>
   </paper-header-panel>
   
-  <paper-header-panel main mode="waterfall">
+  <paper-header-panel main mode="standard">
   <paper-toolbar>
     <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
     <span class="title">Lanches WEB</span>
@@ -139,7 +142,7 @@
   </paper-header-panel>
 </paper-drawer-panel>
 
-<paper-fab icon="add" title="Criar Novo Lanche" tabindex="0" class="red" onclick="dialogoCriar()"></paper-fab>
+<paper-fab icon="add" title="Criar Novo Opcional" tabindex="0" class="red" onclick="dialogoCriar()"></paper-fab>
 
 
     <paper-dialog id="excluir" modal with-backdrop entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
@@ -292,6 +295,7 @@
  			document.getElementById('formExcluir').submit();	
         }
  	}
+	
 
   </script>
 </body>

@@ -13,27 +13,31 @@ public class Pedido {
 	private Status status;
 	private Usuario usuario;
 	private ArrayList<ItemPedido> itens;
-	
+	private int numPedido;
 	
 	public Pedido() {
 	}
-
+	public Pedido(int id) {
+		this(id, null, Status.CADASTRADO, null);
+	}
+	public Pedido(ArrayList<ItemPedido> itens){
+		this(0, null, Status.CADASTRADO, null);
+		this.itens = itens;
+	}
 	public Pedido(int id, Date dtCriacao, Status status,Usuario usurio) {
-		super();
-		this.id = id;
-		this.dtCriacao = dtCriacao;
-		this.status = status;
-		this.usuario = usurio;
+		this(id,dtCriacao,null,status,usurio);
 	}
 	public Pedido(int id, Date dtCriacao, Date dtModificacao, Status status,Usuario usurio) {
-		super();
 		this.id = id;
 		this.dtCriacao = dtCriacao;
-		this.dtModificacao = dtModificacao;
 		this.status = status;
 		this.usuario = usurio;
+		this.dtModificacao = dtModificacao;
 	}
-
+	public Pedido(int id, Date dtCriacao, Date dtModificacao, Status status,Usuario usurio, int numPedido) {
+		this(id, dtCriacao, dtModificacao, status, usurio);	
+		this.numPedido = numPedido;
+	}
 
 /**
  * 
@@ -91,6 +95,19 @@ public class Pedido {
 
 	public void setDtModificacao(Date dtModificacao) {
 		this.dtModificacao = dtModificacao;
+	}
+	public int getNumPedido() {
+		return numPedido;
+	}
+
+	public void setNumPedido(int numPedido) {
+		this.numPedido = numPedido;
+	}
+	public String getNomeUsuarioCriacao(){
+		if(getUsuario() == null)
+			return "Balcão";
+		return getUsuario().getNome().trim()+" "+getUsuario().getSobrenome().trim();
+				
 	}
 
 
