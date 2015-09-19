@@ -6,12 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
 import com.lanche.entity.Lanche;
 import com.lanche.entity.Opcionais;
 import com.lanche.utils.ArquivosConfig;
 
-public class LancheDAO extends DAO<Lanche> {
-
+public class LancheDAO extends DAO implements DAOCrud<Lanche>  {
+	
 	@Override
 	public Lanche searchByID(int id) {
 		if (openConnection()) {
@@ -40,7 +41,7 @@ public class LancheDAO extends DAO<Lanche> {
 
 		return null;
 	}
-
+	
 	public ArrayList<Lanche> getAll(){
 		if (openConnection()) {
 			ArrayList<Lanche> list = new ArrayList<Lanche>();
@@ -127,7 +128,6 @@ public class LancheDAO extends DAO<Lanche> {
 		Lanche l = new Lanche(id);		
 		return delete(l);	
 	}
-
 	@Override
 	public boolean persist(Lanche t) {
 		if(openConnection()){

@@ -39,9 +39,10 @@
 
   <link rel="import" href="bower_components/paper-input/paper-input-error.html">
   <link rel="import" href="bower_components/paper-input/paper-input.html">
-    <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
+  <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
   <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
   <link rel="import" href="bower_components/paper-menu/paper-menu.html">
+  <link rel="import" href="bower_components/paper-tooltip/paper-tooltip.html">
   <link rel="import" href="css/style.html">
 
 </head>
@@ -69,7 +70,9 @@
     <a href="/LancheWeb/usuario.jsp">
           <paper-item>Usuários</paper-item>
     </a>
-
+	<a href="/LancheWeb/configuracoes.jsp">
+          <paper-item>Configurações</paper-item>
+    </a>
 	</paper-menu>
 	</div>
   </paper-header-panel>
@@ -131,8 +134,10 @@
 			    	 %><td class="td_logic"><paper-checkbox disabled></paper-checkbox></td><%
 			    }
 			    %> 
-		    <td class="td_icons"><paper-icon-button onclick="dialogoEdicao('<%=opcional.getId()%>')" icon="create"></paper-icon-button><paper-icon-button onclick="dialogoExclusao('<%=opcional.getId()%>')" icon="delete"></paper-icon-button></td>
+		    <td class="td_icons"><paper-icon-button id="iconeeditar<%=opcional.getId()%>" onclick="dialogoEdicao('<%=opcional.getId()%>')" icon="create"></paper-icon-button><paper-icon-button id="iconeexcluir<%=opcional.getId()%>" onclick="dialogoExclusao('<%=opcional.getId()%>')" icon="delete"></paper-icon-button></td>
 		  </tr>
+		  <paper-tooltip for="iconeeditar<%=opcional.getId()%>">Editar Opcional</paper-tooltip>
+		  <paper-tooltip for="iconeexcluir<%=opcional.getId()%>">Excluir Opcional</paper-tooltip>
 		  <%  
 		  }
 		  %>

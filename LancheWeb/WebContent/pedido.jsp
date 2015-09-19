@@ -74,7 +74,9 @@
     <a href="/LancheWeb/usuario.jsp">
           <paper-item>Usuários</paper-item>
     </a>
-
+	<a href="/LancheWeb/configuracoes.jsp">
+          <paper-item>Configurações</paper-item>
+    </a>
 	</paper-menu>
 	</div>
 	<%
@@ -158,7 +160,7 @@
         	<div class="card_total" style="text-align: right;">Total R$ <%=df.format(pedido.getTotal())%>
         	</div>
       </div>
-      <div class="card-actions">
+      <div class="card-actions" style="padding:5px 10px">
         <paper-button onclick="passarParaFazendo('<%=pedido.getId()%>')">Passar para Fazendo</paper-button>
         <paper-button onclick="passarParaPronto('<%=pedido.getId()%>')">Passar para Pronto</paper-button>
       </div>

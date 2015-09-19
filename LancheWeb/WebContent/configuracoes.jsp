@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="com.lanche.controller.ConfiguracoesController, com.lanche.entity.*" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,9 +40,13 @@
   <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
   <link rel="import" href="bower_components/paper-menu/paper-menu.html">
   <link rel="import" href="css/style.html">
+
+
+
 </head>
 
 <body>
+
 <paper-drawer-panel id="paperDrawerPanel" force-narrow="true">
   <paper-header-panel drawer mode="waterfall">
    
@@ -49,7 +57,7 @@
    
     <div>
     <paper-menu class="list">
-	<a href="/LancheWeb/pedido.jsp">
+    <a href="/LancheWeb/pedido.jsp">
           <paper-item>Pedidos</paper-item>
     </a>
     <a href="/LancheWeb/lanche.jsp">
@@ -59,26 +67,54 @@
           <paper-item>Opcionais</paper-item>
     </a>
     <a href="/LancheWeb/usuario.jsp">
-          <paper-item>UsuÃ¡rios</paper-item>
+          <paper-item>Usuários</paper-item>
     </a>
-    <a href="/LancheWeb/configuracoes.jsp">
-          <paper-item>ConfiguraÃ§Ãµes</paper-item>
+	<a href="/LancheWeb/configuracoes.jsp">
+          <paper-item>Configurações</paper-item>
     </a>
-
 	</paper-menu>
 	</div>
   </paper-header-panel>
   
-  <paper-header-panel main mode="waterfall">
-	  <paper-toolbar>
-	    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-	    <span class="title">Lanches WEB</span>
-	  </paper-toolbar>
+  <paper-header-panel main mode="standard">
+	<paper-toolbar>
+    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+    <span class="title">Lanches WEB</span>
+  </paper-toolbar>
 
+		<%ConfiguracoesController c = new ConfiguracoesController();
+		Configuracoes configuracao = c.buscaConfiguracoes();
+		
+		%>
   
-	
-		</paper-header-panel>
-</paper-drawer-panel>
-  
+		<paper-material elevation="2" class="paper-material-login">
+		
+			<h3 style="padding-left: 10px; padding-top: 10px">Configurações</h3>
+			<div>
+				<form is="iron-form" id="formConfig" method="post" action="/LancheWeb/ConfiguracoesServlet" style="padding-left: 30px;padding-right: 30px">
+					<input type="hidden" name="METHOD" value="ZERARNUMPEDIDO">
+					<paper-input-container>
+						<label>Ultimo ID pedido</label>
+						<input is="iron-input" type="text" id="id_pedido" name="id_pedido" readonly="readonly" value="<%=configuracao.getUltimoIDPedido()%>">
+					</paper-input-container>
+					<paper-input-container >
+						<label>Próximo número pedido</label>
+						<input is="iron-input" id="num_pedido" name="num_pedido" readonly="readonly" value="<%=configuracao.getUltimoNumeroPedido()%>">
+					</paper-input-container>
+					<br>
+				</form>
+		</div>
+		<div class="buttons" style="position: relative;left: 170px;bottom: 15px"><paper-button raised  onclick="clickHandler(event)">Zerar número do Pedido</paper-button>
+		</div>
+		</paper-material>
+
+
+  <script>
+
+    function clickHandler(event) {
+    	document.getElementById('formConfig').submit();	
+        }
+  </script>
+
 </body>
 </html>

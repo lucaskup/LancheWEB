@@ -12,6 +12,7 @@
       <url-pattern>/usuario.jsp</url-pattern>
       <url-pattern>/pedido.jsp</url-pattern>
       <url-pattern>/novo_pedido.jsp</url-pattern>
+      <url-pattern>/configuracoes.jsp</url-pattern>
     </web-resource-collection>
     <auth-constraint>
       <role-name>user</role-name>

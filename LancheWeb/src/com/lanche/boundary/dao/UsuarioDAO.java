@@ -10,7 +10,7 @@ import com.lanche.entity.Usuario;
 import com.lanche.entity.enums.Funcao;
 import com.lanche.utils.ArquivosConfig;
 
-public class UsuarioDAO extends DAO<Usuario> {
+public class UsuarioDAO extends DAO implements DAOCrud<Usuario> {
 
 	@Override
 	public Usuario searchByID(int id) {

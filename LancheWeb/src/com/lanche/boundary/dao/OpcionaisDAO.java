@@ -11,9 +11,8 @@ import java.util.List;
 import com.lanche.entity.Opcionais;
 import com.lanche.utils.ArquivosConfig;
 
-public class OpcionaisDAO extends DAO<Opcionais> {
+public class OpcionaisDAO extends DAO implements DAOCrud<Opcionais>  {
 
-	@Override
 	public Opcionais searchByID(int id) {
 		if (openConnection()) {
 			Opcionais opcional = null;
@@ -117,8 +116,6 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 				dtModificacao);
 		return opcional;
 	}
-	
-	@Override
 	public boolean delete(Opcionais t) {
 		boolean ret = false;
 		if(openConnection()){
@@ -136,7 +133,6 @@ public class OpcionaisDAO extends DAO<Opcionais> {
 		
 	}
 
-	@Override
 	public boolean persist(Opcionais t) {
 		if(openConnection()){
 			boolean inseriu = true;

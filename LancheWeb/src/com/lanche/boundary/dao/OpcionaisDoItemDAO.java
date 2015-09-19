@@ -9,25 +9,7 @@ import com.lanche.entity.Opcionais;
 import com.lanche.entity.OpcionaisDoItem;
 import com.lanche.utils.ArquivosConfig;
 
-public class OpcionaisDoItemDAO extends DAO<OpcionaisDoItem> {
-
-	@Override
-	public OpcionaisDoItem searchByID(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean delete(OpcionaisDoItem t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean persist(OpcionaisDoItem t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+public class OpcionaisDoItemDAO extends DAO {
 
 	public ArrayList<OpcionaisDoItem> getAllFromItemPedido(int idItemPedido) {
 		if (openConnection()) {

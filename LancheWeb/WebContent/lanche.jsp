@@ -42,6 +42,7 @@
   <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
   <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
   <link rel="import" href="bower_components/paper-menu/paper-menu.html">
+  <link rel="import" href="bower_components/paper-tooltip/paper-tooltip.html">
   <link rel="import" href="css/style.html">
 
 </head>
@@ -69,7 +70,9 @@
     <a href="/LancheWeb/usuario.jsp">
           <paper-item>Usuários</paper-item>
     </a>
-
+	<a href="/LancheWeb/configuracoes.jsp">
+          <paper-item>Configurações</paper-item>
+    </a>
 	</paper-menu>
 	</div>
   </paper-header-panel>
@@ -131,10 +134,13 @@
 			    	 %><iron-icon icon="close"></iron-icon></td><%
 			    }
 			    %> 
-			    <td class="td_icons_lanche"><paper-icon-button onclick="dialogoOpcionais('<%=lanche.getId()%>')" icon="<%=lanche.possuiOpcionais() ? "info" : "info-outline"%>"></paper-icon-button><paper-icon-button onclick="dialogoEdicao('<%=lanche.getId()%>')" icon="create"></paper-icon-button><paper-icon-button onclick="dialogoExclusao('<%=lanche.getId()%>')" icon="delete"></paper-icon-button></td>
+			    <td class="td_icons_lanche"><paper-icon-button id='iconeopcionais<%=lanche.getId()%>' onclick="dialogoOpcionais('<%=lanche.getId()%>')" icon="<%=lanche.possuiOpcionais() ? "info" : "info-outline"%>"></paper-icon-button><paper-icon-button id='iconeeditar<%=lanche.getId()%>'  onclick="dialogoEdicao('<%=lanche.getId()%>')" icon="create"></paper-icon-button><paper-icon-button id='iconeexcluir<%=lanche.getId()%>'  onclick="dialogoExclusao('<%=lanche.getId()%>')" icon="delete"></paper-icon-button></td>
 			    <td class="td_hidden"><%=lanche.getCSVIdOpcionais()%></td>
 			  </tr>
 			  
+			  <paper-tooltip for="iconeopcionais<%=lanche.getId()%>">Este lanche <%=lanche.possuiOpcionais() ? "possui" : "não possui"%> opcionais</paper-tooltip>
+			  <paper-tooltip for="iconeeditar<%=lanche.getId()%>">Editar Lanche</paper-tooltip>
+			  <paper-tooltip for="iconeexcluir<%=lanche.getId()%>">Excluir Lanche</paper-tooltip>
 		  <%  
 		  }
 		  %>

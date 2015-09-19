@@ -39,6 +39,7 @@
   <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
   <link rel="import" href="bower_components/paper-menu/paper-menu.html">
   <link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+  <link rel="import" href="bower_components/paper-tooltip/paper-tooltip.html">
 
   <link rel="import" href="bower_components/paper-item/paper-item.html">
   
@@ -69,7 +70,9 @@
     <a href="/LancheWeb/usuario.jsp">
           <paper-item>Usuários</paper-item>
     </a>
-
+	<a href="/LancheWeb/configuracoes.jsp">
+          <paper-item>Configurações</paper-item>
+    </a>
 	</paper-menu>
 	</div>
   </paper-header-panel>
@@ -128,9 +131,10 @@
 		    <td class="td_logic"><paper-checkbox disabled></paper-checkbox></td>
 		    <%} %>
 		    
-		    <td class="td_icons"><paper-icon-button onclick="dialogoEdicao('<%=usuario.getId()%>')" icon="create"></paper-icon-button><paper-icon-button onclick="dialogoExclusao('<%=usuario.getId()%>')" icon="delete"></paper-icon-button></td>
+		    <td class="td_icons"><paper-icon-button id="iconeeditar<%=usuario.getId()%>" onclick="dialogoEdicao('<%=usuario.getId()%>')" icon="create"></paper-icon-button><paper-icon-button id="iconeexcluir<%=usuario.getId()%>" onclick="dialogoExclusao('<%=usuario.getId()%>')" icon="delete"></paper-icon-button></td>
 		</tr>
-			  
+	  <paper-tooltip for="iconeeditar<%=usuario.getId()%>">Editar Usuário</paper-tooltip>
+	  <paper-tooltip for="iconeexcluir<%=usuario.getId()%>">Excluir Usuário</paper-tooltip>
 		  <%  
 		  }
 		  %>

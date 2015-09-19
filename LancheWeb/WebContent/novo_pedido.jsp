@@ -70,7 +70,9 @@
     <a href="/LancheWeb/usuario.jsp">
           <paper-item>Usuários</paper-item>
     </a>
-
+	<a href="/LancheWeb/configuracoes.jsp">
+          <paper-item>Configurações</paper-item>
+    </a>
 	</paper-menu>
 	</div>
   </paper-header-panel>

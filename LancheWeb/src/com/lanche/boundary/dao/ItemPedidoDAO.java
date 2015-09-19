@@ -10,13 +10,7 @@ import com.lanche.entity.Lanche;
 import com.lanche.entity.Pedido;
 import com.lanche.utils.ArquivosConfig;
 
-public class ItemPedidoDAO extends DAO<ItemPedidoDAO> {
-
-	@Override
-	public ItemPedidoDAO searchByID(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public class ItemPedidoDAO extends DAO{
 
 	public ArrayList<ItemPedido> getAllFromPedido(int idPedido) {
 		if (openConnection()) {
@@ -49,18 +43,6 @@ public class ItemPedidoDAO extends DAO<ItemPedidoDAO> {
 		}
 		return null;
 
-	}
-
-	@Override
-	public boolean delete(ItemPedidoDAO t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean persist(ItemPedidoDAO t) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	public void persist(Pedido t) {
@@ -97,5 +79,7 @@ public class ItemPedidoDAO extends DAO<ItemPedidoDAO> {
 
 		
 	}
+
+
 
 }

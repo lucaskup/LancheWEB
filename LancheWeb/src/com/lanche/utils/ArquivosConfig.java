@@ -47,4 +47,7 @@ public final class ArquivosConfig {
 	public static final String usuarioInsert = "INSERT INTO lanche.usuario (login,nome,sobrenome,dataNascimento,turma,funcao,ativo,password) VALUES (?,?,?,?,?,?,?,?)";
 	public static final String usuarioUpdate = "UPDATE lanche.usuario SET login = ?, nome = ?, sobrenome = ?, dataNascimento = ?, turma = ?, funcao = ?, ativo =? WHERE idUsuario = ?";
 	
+	public static final String configuracoesSelect = "SELECT (SELECT MAX(p.idPedido) FROM lanche.pedido p) AS ultimo_idPedido, (SELECT s.next FROM lanche._sequences s WHERE name = 'seq_numPedido') AS ultimo_numPedido";
+	public static final String configuracoesAlteraNumPedido = "UPDATE lanche._sequences SET next = ? WHERE name = 'seq_numPedido'";
+	
 }

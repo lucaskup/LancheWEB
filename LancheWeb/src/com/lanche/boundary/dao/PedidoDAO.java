@@ -15,7 +15,7 @@ import com.lanche.entity.Usuario;
 import com.lanche.entity.enums.Status;
 import com.lanche.utils.ArquivosConfig;
 
-public class PedidoDAO extends DAO<Pedido> {
+public class PedidoDAO extends DAO implements DAOCrud<Pedido>  {
 
 	@Override
 	public Pedido searchByID(int id) {
