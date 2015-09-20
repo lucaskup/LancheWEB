@@ -95,7 +95,7 @@
 		    <th>Preço</th>
 		    <th>Data de Cadastro</th> 
 		    <th>Data de Modificação</th>
-		    <th>Permite mais de um</th>
+		    <!--  <th>Permite mais de um</th>-->
 		    <th></th>
 		  </tr>
 		  </thead>
@@ -129,9 +129,9 @@
 		    <td class="td_datetime"><%=dtCriacao%></td>
 		    <td class="td_datetime"><%=dtModificacao%></td> 
 		    <%if(opcional.permiteMaisQueUm()){
-			    	%><td class="td_logic"><paper-checkbox checked disabled></paper-checkbox></td><%
+			    	%><td class="td_hidden"><paper-checkbox checked disabled></paper-checkbox></td><%
 			    }else{
-			    	 %><td class="td_logic"><paper-checkbox disabled></paper-checkbox></td><%
+			    	 %><td class="td_hidden"><paper-checkbox disabled></paper-checkbox></td><%
 			    }
 			    %> 
 		    <td class="td_icons"><paper-icon-button id="iconeeditar<%=opcional.getId()%>" onclick="dialogoEdicao('<%=opcional.getId()%>')" icon="create"></paper-icon-button><paper-icon-button id="iconeexcluir<%=opcional.getId()%>" onclick="dialogoExclusao('<%=opcional.getId()%>')" icon="delete"></paper-icon-button></td>
@@ -177,7 +177,7 @@
 					<paper-input-error>Favor informar o Preço!</paper-input-error>
 				</paper-input-container>
 				<br>
-				<paper-checkbox id="de_permitemais" name="permitemais" class="green">Permite mais de um</paper-checkbox>
+				<paper-checkbox id="de_permitemais" name="permitemais" class="green" style="display:none">Permite mais de um</paper-checkbox> 
 				<input type="hidden" id="deh_permitemais" name="permitemais">
 				<input type="hidden" value="PUT" name="METHOD">
 			</form>
@@ -206,7 +206,7 @@
 				<paper-input-error>Favor informar o Preço!</paper-input-error>
 			</paper-input-container>
 			<br>
-			<paper-checkbox id="dc_permitemais" name="permitemais" class="green">Permite mais de um</paper-checkbox>
+			<paper-checkbox id="dc_permitemais" name="permitemais" class="green" style="display:none">Permite mais de um</paper-checkbox>
 			<input type="hidden" id="dch_permitemais" name="permitemais">
 			<input type="hidden" value="PUT" name="METHOD">
 		</form>
@@ -254,8 +254,7 @@
 					document.getElementById('de_id').value = id;
 					document.getElementById('de_descricao').value = row.cells[1].innerHTML;
 					document.getElementById('de_preco').value = row.cells[2].innerHTML;
-					document.getElementById('de_permitemais').checked = row.cells[5].firstChild.checked;
-					
+					document.getElementById('de_permitemais').checked = row.cells[5].firstChild.checked;				
 				}
 			}
 			document.getElementById('de_descricao').validate();

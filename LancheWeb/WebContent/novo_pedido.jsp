@@ -123,7 +123,7 @@
 
 	</paper-card>
 
-	<paper-card heading="Pedido" elevation=2 class="pedido-right">
+	<paper-card heading="Pedido" elevation=2 class="pedido-center">
 
 	       		<table id="tabela_ped">
 			  	<thead>
@@ -136,7 +136,7 @@
 				  <tfoot>
 				    <tr>
 				      <td style="font-weight: bold;">Total</td>
-				      <td style="font-weight: bold;">R$ 0,00</td>
+				      <td style="font-weight: bold;" class="td_numeric">R$ 0,00</td>
 				      <td></td>
 				    </tr>
 				  </tfoot>
@@ -144,7 +144,9 @@
 
 				  </tbody>
 				</table> 
-
+				<div style="width: 100%;margin: 0px;padding: 0px;border-bottom:  1px solid #e0e0e0;">
+				      <span style="margin-left: 10px;margin-right: 10px;font-weight: bold;">Observação</span><input id="obspedido" type="text" style="padding: 4px;margin-right: 10px;margin-top: 6px;margin-bottom: 6px" maxlength="50"></input><br>
+				</div>
 <paper-button  onclick="criarPedido()" class="dialogo">Criar Pedido</paper-button>
 
 
@@ -351,7 +353,7 @@
  	}
  	
  	function criarPedido(){
- 		var itemPedido = {id:0, quantidade:0, opcionais:" "};
+ 		var itemPedido = {id:0, quantidade:0, opcionais:" ", observacao:" "};
  		var tabela = document.getElementById('tabela_ped').getElementsByTagName('tbody')[0];
  		var pedido = [];
  		var jsonPedido = "";
