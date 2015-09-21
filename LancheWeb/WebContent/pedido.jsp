@@ -157,6 +157,10 @@
         	<div class="card_item_opcional">
         		<%=op.getOpcional().getDescricao() %>
         	</div><%}%><%}%>
+        	<% if(pedido.possuiObservacao()) {%>
+        	<div class="card_total" style="text-align: left;"><%=pedido.getObservacao()%>
+        	</div>
+        	<%}%>
         	<div class="card_total" style="text-align: right;">Total R$ <%=df.format(pedido.getTotal())%>
         	</div>
       </div>

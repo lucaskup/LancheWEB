@@ -14,6 +14,7 @@ public class Pedido {
 	private Usuario usuario;
 	private ArrayList<ItemPedido> itens;
 	private int numPedido;
+	private String observacao;
 	
 	public Pedido() {
 	}
@@ -24,21 +25,25 @@ public class Pedido {
 		this(0, null, Status.CADASTRADO, null);
 		this.itens = itens;
 	}
-	public Pedido(int id, Date dtCriacao, Status status,Usuario usurio) {
-		this(id,dtCriacao,null,status,usurio);
+	public Pedido(int id, Date dtCriacao, Status status,Usuario usuario) {
+		this(id,dtCriacao,null,status,usuario);
 	}
 	public Pedido(int id, Date dtCriacao, Date dtModificacao, Status status,Usuario usurio) {
 		this.id = id;
 		this.dtCriacao = dtCriacao;
+		this.dtModificacao = dtModificacao;
 		this.status = status;
 		this.usuario = usurio;
-		this.dtModificacao = dtModificacao;
 	}
-	public Pedido(int id, Date dtCriacao, Date dtModificacao, Status status,Usuario usurio, int numPedido) {
-		this(id, dtCriacao, dtModificacao, status, usurio);	
+	public Pedido(int id, Date dtCriacao, Date dtModificacao, Status status,Usuario usuario, int numPedido) {
+		this(id, dtCriacao, dtModificacao, status, usuario);	
 		this.numPedido = numPedido;
 	}
 
+	public Pedido(String observacao, ArrayList<ItemPedido> lista) {
+			this(lista);
+			this.setObservacao(observacao);
+		}
 /**
  * 
  * @return Retorna o valor de todos os itens e seus opcionais somados
@@ -53,7 +58,10 @@ public class Pedido {
 		return total;
 	}
 
-	public int getId() {
+	public boolean possuiObservacao(){
+		return getObservacao() != null && !getObservacao().trim().isEmpty();
+	}
+ 	public int getId() {
 		return id;
 	}
 
@@ -103,6 +111,12 @@ public class Pedido {
 	public void setNumPedido(int numPedido) {
 		this.numPedido = numPedido;
 	}
+	public String getObservacao() {
+		return observacao;
+	}
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 	public String getNomeUsuarioCriacao(){
 		if(getUsuario() == null)
 			return "Balcão";
@@ -113,11 +127,6 @@ public class Pedido {
 		if(obj == null || !(obj instanceof Pedido)){
 			return super.equals(obj);
 		}
-		
-		return this.getId() == ((Pedido)obj).getId();
-		
-		
+		return this.getId() == ((Pedido)obj).getId();		
 	}
-
-
 }

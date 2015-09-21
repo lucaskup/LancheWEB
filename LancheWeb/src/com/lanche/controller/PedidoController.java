@@ -48,14 +48,6 @@ public class PedidoController {
 		return ret;
 	}
 	
-	public List<Pedido> getAll(){
-		PedidoDAO dao = new PedidoDAO();
-		return dao.getAll();
-	}
-	public List<Pedido> getAllToday(){
-		PedidoDAO dao = new PedidoDAO();
-		return dao.getAllFromToday();
-	}
 	public boolean createOrUpdateLanche(Pedido p){
 		PedidoDAO dao = new PedidoDAO();
 		
@@ -84,7 +76,10 @@ public class PedidoController {
 		LancheDAO dao = new LancheDAO();
 		OpcionaisDAO daoOp = new OpcionaisDAO();
 		PedidoDAO daoPedido = new PedidoDAO();
-		JSONArray array = new JSONArray(json);
+		JSONObject pedidoJson = new JSONObject(json);
+		String obs = pedidoJson.getString("observacao");
+		
+		JSONArray array = pedidoJson.getJSONArray("itens");
 		String opcionaisCSV = "";
 		
 		for (int i = 0; i < array.length(); i++) {
@@ -93,7 +88,7 @@ public class PedidoController {
 			ItemPedido iPedido = new ItemPedido(0,i,item.getInt("quantidade"),lanche); 
 			
 			opcionaisCSV = item.getString("opcionais");
-			if(!opcionaisCSV.isEmpty()){
+			if(!opcionaisCSV.trim().isEmpty()){
 				String[] opcionais = opcionaisCSV.split(",");
 				for (int j = 0; j < opcionais.length; j++) {
 					try {
@@ -105,7 +100,7 @@ public class PedidoController {
 			}
 			lista.add(iPedido);
 		}
-		Pedido p = new Pedido(lista);
+		Pedido p = new Pedido(obs,lista);
 		daoPedido.persist(p);
 	}
 

@@ -25,11 +25,11 @@ public final class ArquivosConfig {
 	public static final String lancheInsertOpcional = "INSERT INTO lanche.lanchexopcionais (fkLanche, fkOpcionais) VALUES (?, ?)";
 	public static final String lancheDeleteOpcional = "DELETE FROM lanche.lanchexopcionais WHERE fkLanche = ? AND fkOpcionais = ?";
 	
-	public static final String pedidoSearchByID = "SELECT p.idPedido, p.dtCriacao, p.dtModificacao, p.status, p.fkUsuario, p.numPedido FROM lanche.pedido p WHERE p.idPedido = ?";
-	public static final String pedidoSearchAll = "SELECT p.idPedido, p.dtCriacao, p.dtModificacao, p.status, p.fkUsuario, p.numPedido FROM lanche.pedido p ORDER BY p.idPedido DESC";
-	public static final String pedidoSearchAllFromToday = "SELECT p.idPedido, p.dtCriacao, p.dtModificacao, p.status, p.fkUsuario, p.numPedido FROM lanche.pedido p WHERE p.dtCriacao between ? AND ? ORDER BY p.idPedido DESC";
-	public static final String pedidoInsert = "INSERT INTO lanche.pedido (fkUsuario, status) VALUES (?, ?)";
-	public static final String pedidoUpdate = "UPDATE lanche.pedido SET fkUsuario = ?, dtCriacao = ?, status = ? WHERE idPedido = ?";
+	public static final String pedidoSearchByID = "SELECT p.idPedido, p.dtCriacao, p.dtModificacao, p.status, p.fkUsuario, p.numPedido, p.observacao FROM lanche.pedido p WHERE p.idPedido = ?";
+	public static final String pedidoSearchAll = "SELECT p.idPedido, p.dtCriacao, p.dtModificacao, p.status, p.fkUsuario, p.numPedido, p.observacao FROM lanche.pedido p ORDER BY p.idPedido DESC";
+	public static final String pedidoSearchAllFromToday = "SELECT p.idPedido, p.dtCriacao, p.dtModificacao, p.status, p.fkUsuario, p.numPedido, p.observacao FROM lanche.pedido p WHERE p.dtCriacao between ? AND ? ORDER BY p.idPedido DESC";
+	public static final String pedidoInsert = "INSERT INTO lanche.pedido (fkUsuario, status, observacao) VALUES (?, ?, ?)";
+	public static final String pedidoUpdate = "UPDATE lanche.pedido SET fkUsuario = ?, dtCriacao = ?, status = ?, observacao = ? WHERE idPedido = ?";
 	public static final String pedidoUpdateStatus = "UPDATE lanche.pedido SET status = ? WHERE idPedido = ?";
 	public static final String pedidoDelete = "DELETE FROM lanche.pedido WHERE idPedido = ?";
 	

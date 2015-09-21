@@ -64,6 +64,7 @@ public class PedidoDAO extends DAO implements DAOCrud<Pedido>  {
 		
 		pedido = new Pedido(r.getInt(1), dtCadastro, dtModificacao,
 				Status.getStatus((r.getInt(4))), usu,r.getInt(6));
+		pedido.setObservacao(r.getString(7));
 		return pedido;
 	}
 
@@ -96,6 +97,7 @@ public class PedidoDAO extends DAO implements DAOCrud<Pedido>  {
 				}
 				
 				comando.setInt(2, t.getStatus().getValor());
+				comando.setString(3, t.getObservacao());
 				
 				if(comando.executeUpdate()>0){
 					ResultSet r = comando.getGeneratedKeys();

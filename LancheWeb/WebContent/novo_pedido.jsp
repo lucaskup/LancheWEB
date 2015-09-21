@@ -319,7 +319,6 @@
 			}
 		}
 
- 		
 		if (dialog) {
 		dialog.open();
 		}
@@ -354,18 +353,20 @@
  	
  	function criarPedido(){
  		var itemPedido = {id:0, quantidade:0, opcionais:" ", observacao:" "};
- 		var tabela = document.getElementById('tabela_ped').getElementsByTagName('tbody')[0];
- 		var pedido = [];
- 		var jsonPedido = "";
  		
+ 		var tabela = document.getElementById('tabela_ped').getElementsByTagName('tbody')[0];
+ 		var pedido = {observacao:" ",itens:[]};
+ 		var jsonPedido = "";
+ 		pedido.observacao =  document.getElementById('obspedido').value;
 		for (var k = 0, rowItemPed; rowItemPed = tabela.rows[k]; k++) {
 			itemPedido = new Object();
 				itemPedido.id = parseInt(rowItemPed.cells[3].innerHTML);
 				itemPedido.quantidade = 1;
 				itemPedido.opcionais = rowItemPed.cells[4].innerHTML;
-				pedido.push(itemPedido);
+				pedido.itens.push(itemPedido);
 		}
 		jsonPedido = JSON.stringify(pedido);
+		alert(jsonPedido);
 		document.getElementById('dcp_pedido').value=jsonPedido;
 		if(jsonPedido){
 			document.getElementById('formCriarPedido').submit();	
