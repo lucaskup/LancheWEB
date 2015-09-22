@@ -77,7 +77,7 @@
 	</div>
   </paper-header-panel>
   
-  <paper-header-panel main mode="waterfall">
+  <paper-header-panel main mode="standard">
   <paper-toolbar>
     <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
     <span class="title">Lanches WEB</span>
@@ -144,8 +144,9 @@
 
 				  </tbody>
 				</table> 
-				<div style="width: 100%;margin: 0px;padding: 0px;border-bottom:  1px solid #e0e0e0;">
-				      <span style="margin-left: 10px;margin-right: 10px;font-weight: bold;">Observação</span><input id="obspedido" type="text" style="padding: 4px;margin-right: 10px;margin-top: 6px;margin-bottom: 6px" maxlength="50"></input><br>
+				<div style="width: 100%;margin: 0px;padding: 0px;border-bottom:  1px solid #e0e0e0;">     
+			      <span style="margin-left: 10px;margin-right: 10px;font-weight: bold;">Observação</span>
+			      <input is="iron-input" id="obspedido" type="text" style="padding: 4px;margin-right: 10px;margin-top: 6px;margin-bottom: 6px;position: relative;" maxlength="50"><br>
 				</div>
 <paper-button  onclick="criarPedido()" class="dialogo">Criar Pedido</paper-button>
 
@@ -352,7 +353,7 @@
  	}
  	
  	function criarPedido(){
- 		var itemPedido = {id:0, quantidade:0, opcionais:" ", observacao:" "};
+ 		var itemPedido = {id:0, quantidade:0, opcionais:" "};
  		
  		var tabela = document.getElementById('tabela_ped').getElementsByTagName('tbody')[0];
  		var pedido = {observacao:" ",itens:[]};
@@ -366,9 +367,8 @@
 				pedido.itens.push(itemPedido);
 		}
 		jsonPedido = JSON.stringify(pedido);
-		alert(jsonPedido);
 		document.getElementById('dcp_pedido').value=jsonPedido;
-		if(jsonPedido){
+		if(pedido.itens.length>0){
 			document.getElementById('formCriarPedido').submit();	
 		}
 		
