@@ -216,6 +216,8 @@
 	var idExcluir = 0;
 	var idEditar = 0;
 	var idItemPedido = 0;
+	var idItemEditarOpcionais = 0;
+	
  
  function atualizaTotalPedido(){
 	var tabelaPedidoFooter = document.getElementById("tabela_ped").getElementsByTagName('tfoot')[0]; 
@@ -227,6 +229,8 @@
 	}
 	tabelaPedidoFooter.rows[0].cells[1].innerHTML = "R$ " + total.toFixed(2);
  }
+ 
+ 
 	
  function adicionarLanche(id){
 		var tabelaPedido = document.getElementById("tabela_ped").getElementsByTagName('tbody')[0];
@@ -245,10 +249,6 @@
 				opcionais = row.cells[4].innerHTML;
 			}
 		}
-		if(opcionais){
-			dialogoOpcionais(opcionais);
-		}
-		
 		
 		// Create an empty <tr> element and add it to the 1st position of the tabelaPedido:
 		var row = tabelaPedido.insertRow(tabelaPedido.rows.length);
@@ -260,6 +260,7 @@
 		var cell4 = row.insertCell(3);
 		var cell5 = row.insertCell(4);
 		var cell6 = row.insertCell(5);
+		var cell7 = row.insertCell(6);
 		
 		// Add some text to the new cells:
 		cell1.innerHTML = descricao;
@@ -270,8 +271,16 @@
 			
 		var stringTemp = "<paper-icon-button onclick=\"excluiItemPedido('";
 		stringTemp = stringTemp.concat(idItemPedido,"')\" icon=\"delete\"></paper-icon-button>");
+		
+		if(opcionais){
+			stringTemp = stringTemp.concat("<paper-icon-button onclick=\"editaOpcionaisItemPedido('",idItemPedido,"')\" icon=\"info\"></paper-icon-button>");			
+		}else{
+			stringTemp = stringTemp.concat("<paper-icon-button icon=\"info-outline\"></paper-icon-button>");
+		}
+		
+		
 		cell3.innerHTML = stringTemp;
-		cell3.className="td_logic";
+		cell3.className="td_icons";
 		
 		cell4.innerHTML = id; //id
 		cell4.className="td_hidden";
@@ -282,34 +291,71 @@
 		cell6.innerHTML = idItemPedido; 
 		cell6.className="td_hidden";
 		
+		cell7.innerHTML = opcionais; 
+		cell7.className="td_hidden";
+		
 		atualizaTotalPedido();
+		if(opcionais){
+			dialogoOpcionais(opcionais);
+		}
 	 }
  	function excluiItemPedido(id){
  		var tabelaItemPedido = document.getElementById('tabela_ped');	
-		for (var k = 1, rowOpcional; rowOpcional = tabelaItemPedido.rows[k]; k++) {
+		for (var k = 0, rowOpcional; rowOpcional = tabelaItemPedido.tBodies[0].rows[k]; k++) {
 			if(rowOpcional.cells[5].innerHTML == id){
-				tabelaItemPedido.deleteRow(k);
+				tabelaItemPedido.tBodies[0].deleteRow(k);
 			} 
 		}
  		atualizaTotalPedido();
  	}
 
- 	
+ 	function editaOpcionaisItemPedido(idPedido){
+ 		idItemEditarOpcionais = idPedido;
+ 		var tabelaItemPedido = document.getElementById('tabela_ped');
+ 		var opcionaisDisponiveis = '';
+ 		var opcionaisPreSelecionados = '';
+    	var tabelaDeOpcionais = document.getElementById('tabela_op');
 
- 	
+		for (var k = 0, rowOpcional; rowOpcional = tabelaItemPedido.tBodies[0].rows[k]; k++) {
+			if(rowOpcional.cells[5].innerHTML == idPedido){
+				opcionaisDisponiveis = tabelaItemPedido.tBodies[0].rows[k].cells[6].innerHTML;
+				opcionaisPreSelecionados = tabelaItemPedido.tBodies[0].rows[k].cells[4].innerHTML;
+			} 
+		}
+    	var opcionais = opcionaisPreSelecionados.split(",");
+    	
+    	//Limpa todos os checkbox pois eles podem estar checados da outra vez
+		for (var k = 0, rowOpcional; rowOpcional = tabelaDeOpcionais.rows[k]; k++) {
+			rowOpcional.cells[1].firstChild.checked = false;
+			rowOpcional.style.display="none";
+			for (var j = 0; j < opcionais.length; j++) {
+				if(rowOpcional.cells[0].innerHTML == opcionais[j]){
+					rowOpcional.style.display="";
+					rowOpcional.cells[1].firstChild.checked = true;
+				}
+			}
+		}
+		habilitaOpcionaisMostraDialogo(opcionaisDisponiveis);
+ 		
+ 	}
  	function dialogoOpcionais(opcionaisCSV){
- 		var opcionais = opcionaisCSV.split(",");
-
- 		var dialog = document.getElementById('opcionais');
-
+ 		idItemEditarOpcionais = 0;
     	var tabelaDeOpcionais = document.getElementById('tabela_op');
     	
     	//Limpa todos os checkbox pois eles podem estar checados da outra vez
 		for (var k = 0, rowOpcional; rowOpcional = tabelaDeOpcionais.rows[k]; k++) {
 			rowOpcional.cells[1].firstChild.checked = false;
-			rowOpcional.style.display="none";;
+			rowOpcional.style.display="none";
 		}
-    					
+		habilitaOpcionaisMostraDialogo(opcionaisCSV);
+    	
+ 	}
+ 	
+ 	function habilitaOpcionaisMostraDialogo(opcionaisCSV){
+ 		var opcionais = opcionaisCSV.split(",");
+ 		var tabelaDeOpcionais = document.getElementById('tabela_op');
+
+ 		var dialog = document.getElementById('opcionais');
 		//para cada opcional varre toda a tabela
 		
 		for (var k = 0, rowOpcional; rowOpcional = tabelaDeOpcionais.rows[k]; k++) {
@@ -325,12 +371,15 @@
 		}
  	}
  	
+ 	
+ 	
  	//Utilizado
  	function editarOpcionaisLanche(){
  		var tabelaDeOpcionais = document.getElementById('tabela_op');
  		var dialog = document.getElementById('opcionais');
  		var opcionais;
  		var valorAdicionar = 0;
+ 		var tabelaItemPedido = document.getElementById('tabela_ped');
  		
 		for (var k = 0, rowOpcional; rowOpcional = tabelaDeOpcionais.rows[k]; k++) {
 			if(rowOpcional.cells[1].firstChild.checked){
@@ -345,11 +394,33 @@
 		
  		if(!dialog.closingReason.canceled){
  			var tabela = document.getElementById('tabela_ped').getElementsByTagName('tbody')[0];
- 			var row = tabela.rows[tabela.rows.length-1]; 
+ 			var row;
+ 			if(idItemEditarOpcionais == 0){
+ 				row = tabela.rows[tabela.rows.length-1];	
+ 			}else{
+ 				for (var k = 0, rowOpcional; rowOpcional = tabelaItemPedido.tBodies[0].rows[k]; k++) {
+ 					if(rowOpcional.cells[5].innerHTML == idItemEditarOpcionais){
+ 						row = rowOpcional;
+ 					} 
+ 				}
+ 				
+ 			}
+ 			 
  			row.cells[4].innerHTML = opcionais;
- 			row.cells[1].innerHTML = (parseFloat(row.cells[1].innerHTML) + valorAdicionar).toFixed(2);
+ 			row.cells[1].innerHTML = (getValorLanche(row.cells[3].innerHTML) + valorAdicionar).toFixed(2);
         }
  		atualizaTotalPedido();
+ 	}
+ 	
+ 	function getValorLanche(id){
+ 		var valor = 0.00;
+	   	var tabela = document.getElementById('tabela');
+		for (var i = 0, row; row = tabela.rows[i]; i++) {
+			if(row.cells[0].innerHTML==id){
+				valor = parseFloat(row.cells[2].innerHTML);
+			}
+		}
+ 		return valor;
  	}
  	
  	function criarPedido(){
