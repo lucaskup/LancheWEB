@@ -88,6 +88,7 @@
   		   boolean exibirPronto = true;
   		   boolean exibirFazendo = true;
   	       boolean exibirCadastrado = true;
+  	       boolean exibirCancelado = true;
   		   // Get an array of Cookies associated with this domain
   		   cookies = request.getCookies();
   		   if( cookies != null ){
@@ -105,9 +106,12 @@
   		    	if(cookie.getName().equals("conf_visualiza_cadastrado") && cookie.getValue( ).equals("0")){
   		    		exibirCadastrado = false;
   		    	}
+  		    	if(cookie.getName().equals("conf_visualiza_cancelado") && cookie.getValue( ).equals("0")){
+  		    		exibirCancelado = false;
+  		    	}
   		      }
   		  }
-  		 l = c.getAll(exibirApenasHoje,exibirCadastrado,exibirFazendo,exibirPronto);
+  		 l = c.getAll(exibirApenasHoje,exibirCadastrado,exibirFazendo,exibirPronto, exibirCancelado);
   		   
   		   %>
   </paper-header-panel>
@@ -144,8 +148,9 @@
 		  %>
 		  
 	<paper-card class="primeiroEstagio" elevation=2>
-      <div class="card-content <%=pedido.getStatus() == Status.PRONTO ? "titulo_card_pronto" : pedido.getStatus() == Status.FAZENDO ? "titulo_card_fazendo" : "titulo_card_cadastrado"%>">
+      <div class="card-content <%=pedido.getStatus() == Status.PRONTO ? "titulo_card_pronto" : pedido.getStatus() == Status.FAZENDO ? "titulo_card_fazendo" : pedido.getStatus() == Status.CANCELADO ? "titulo_card_cancelado" : "titulo_card_cadastrado"%>">
       	<iron-icon id="icone<%=pedido.getId()%>" icon="<%=pedido.getUsuario() == null ? "hardware:laptop" :"hardware:phone-android"%>" style="margin-right:7px;"></iron-icon>Pedido <%=pedido.getNumPedido()%> (<%=pedido.getStatus().toString()%>)
+      	<paper-icon-button icon="cancel" onclick="passarParaCancelado('<%=pedido.getId()%>')" style="padding:0px;float:right;color:lightgray"> </paper-icon-button>
       </div>
       
       <div class="card-content">      
@@ -191,6 +196,11 @@
  		<input type="hidden" value="0" name="id" id="ff_id">
  	</form>
  	
+ 	 <form method="post" id="formCancelado" action="/LancheWeb/PedidoServlet">
+ 		<input type="hidden" value="CANCELADO" name="METHOD">
+ 		<input type="hidden" value="0" name="id" id="fc_id">
+ 	</form>
+ 	
  	 <form method="post" id="formCriarPed" action="/LancheWeb/PedidoServlet">
  		<input type="hidden" value="CRIARPED" name="METHOD">
  		<input type="hidden" value="0" name="id" id="doh_id">
@@ -201,6 +211,7 @@
 		<paper-checkbox id="conf_visualiza_pronto" <%=exibirPronto ? "checked":" "%> class="green_v">Pronto</paper-checkbox><br>
 		<paper-checkbox id="conf_visualiza_fazendo" <%=exibirFazendo ? "checked":" "%> class="orange_v">Fazendo</paper-checkbox><br>
 		<paper-checkbox id="conf_visualiza_cadastrado" <%=exibirCadastrado ? "checked":" "%> class="red_v">Cadastrado</paper-checkbox><br>
+		<paper-checkbox id="conf_visualiza_cancelado" <%=exibirCancelado ? "checked":" "%> class="gray_v">Cancelado</paper-checkbox><br>
 		<paper-checkbox id="conf_apenas_hoje" <%=exibirApenasHoje ? "checked":" "%>>Apenas pedidos feitos hoje</paper-checkbox>
 		<div class="buttons">
 		      <paper-button class="dialogo" dialog-dismiss>Cancelar</paper-button>
@@ -233,6 +244,12 @@
 		 }else{
 			 setCookie("conf_visualiza_cadastrado",0,7);
 		 }
+		 if(document.getElementById('conf_visualiza_cancelado').checked){
+			 setCookie("conf_visualiza_cancelado",1,7);
+		 }else{
+			 setCookie("conf_visualiza_cancelado",0,7);
+		 }
+		 
 		 if(document.getElementById('conf_apenas_hoje').checked){
 			 setCookie("conf_apenas_hoje",1,7);
 		 }else{
@@ -253,6 +270,10 @@
 	function passarParaFazendo(id){
 		document.getElementById('ff_id').value=id;
  		document.getElementById('formFazendo').submit();	
+	}
+	function passarParaCancelado(id){
+		document.getElementById('fc_id').value=id;
+ 		document.getElementById('formCancelado').submit();	
 	}
  	function criarPedido(){
  		document.getElementById('formCriarPed').submit();

@@ -2,7 +2,7 @@ package com.lanche.entity.enums;
 
 public enum Status {
 	
-	CADASTRADO(0), FAZENDO(1), PRONTO(2), RETIRADO(3);
+	CADASTRADO(0), FAZENDO(1), PRONTO(2), RETIRADO(3), CANCELADO(4);
 	
 	private final int status;
 
@@ -22,6 +22,10 @@ public enum Status {
 			return FAZENDO;
 		case 2:
 			return PRONTO;
+		case 3:
+			return RETIRADO;
+		case 4:
+			return CANCELADO;
 		default:
 			return RETIRADO;
 		}

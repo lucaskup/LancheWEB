@@ -48,6 +48,11 @@ public class PedidoServlet extends HttpServlet {
 			PedidoController ped  = new PedidoController();
 			ped.passarParaFazendo(Integer.parseInt(id));
 			response.sendRedirect("pedido.jsp");
+		}else if(method.equalsIgnoreCase("CANCELADO")) {
+			String id = request.getParameter("id");
+			PedidoController ped  = new PedidoController();
+			ped.passarParaCancelado(Integer.parseInt(id));
+			response.sendRedirect("pedido.jsp");		
 		}else if(method.equalsIgnoreCase("CRIAR")) {
 			String json = request.getParameter("pedido");
 			PedidoController ped  = new PedidoController();

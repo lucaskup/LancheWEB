@@ -23,7 +23,7 @@ import com.lanche.entity.enums.Status;
 
 public class PedidoController {
 	
-	public List<Pedido> getAll(boolean exibirApenasHoje, boolean exibirCadastrado, boolean exibirFazendo, boolean exibirPronto){
+	public List<Pedido> getAll(boolean exibirApenasHoje, boolean exibirCadastrado, boolean exibirFazendo, boolean exibirPronto, boolean exibirCancelado){
 		PedidoDAO dao = new PedidoDAO();
 		List<Pedido> lista = new ArrayList<Pedido>();
 		if(exibirApenasHoje){
@@ -44,6 +44,10 @@ public class PedidoController {
 				break;
 			case PRONTO:
 				if(exibirPronto)
+					ret.add(pedido);
+				break;
+			case CANCELADO:
+				if(exibirCancelado)
 					ret.add(pedido);
 				break;
 			default:
@@ -75,6 +79,10 @@ public class PedidoController {
 	public boolean passarParaFazendo(int idPedido) {
 		PedidoDAO dao = new PedidoDAO();
 		return dao.updateStatus(idPedido,Status.FAZENDO);
+	}
+	public boolean passarParaCancelado(int idPedido) {
+		PedidoDAO dao = new PedidoDAO();
+		return dao.updateStatus(idPedido,Status.CANCELADO);
 	}
 	public int criarPedidoJson(String json) {
 		return criarPedidoJson(null, json);
@@ -137,5 +145,7 @@ public class PedidoController {
 		p = daoPedido.searchByID(p.getId());
 		return p.getNumPedido();
 	}
+
+
 
 }
