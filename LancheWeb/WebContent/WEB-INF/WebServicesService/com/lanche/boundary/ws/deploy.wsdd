@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from WebServicesService WSDL service -->
+
+  <service name="WebServices" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://ws.boundary.lanche.com"/>
+      <parameter name="wsdlServiceElement" value="WebServicesService"/>
+      <parameter name="schemaQualified" value="http://ws.boundary.lanche.com"/>
+      <parameter name="wsdlServicePort" value="WebServices"/>
+      <parameter name="className" value="com.lanche.boundary.ws.WebServices"/>
+      <parameter name="wsdlPortType" value="WebServices"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://ws.boundary.lanche.com" xmlns:retNS="http://ws.boundary.lanche.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getToken" qname="operNS:getToken" returnQName="retNS:getTokenReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://ws.boundary.lanche.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:login" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.boundary.lanche.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:senha" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://ws.boundary.lanche.com" xmlns:retNS="http://ws.boundary.lanche.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="cadastraPedido" qname="operNS:cadastraPedido" returnQName="retNS:cadastraPedidoReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://ws.boundary.lanche.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:login" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.boundary.lanche.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:token" type="tns:string"/>
+        <parameter xmlns:pns="http://ws.boundary.lanche.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pedidoJson" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="getToken cadastraPedido"/>
+
+  </service>
+</deployment>

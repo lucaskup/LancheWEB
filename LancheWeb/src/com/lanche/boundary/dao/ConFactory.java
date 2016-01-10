@@ -47,6 +47,7 @@ public class ConFactory {
 	public static void main(String[] args) {
 
 			ConFactory.conexao(MYSQL);
+			System.out.println("Lucas");
 
 	}
 

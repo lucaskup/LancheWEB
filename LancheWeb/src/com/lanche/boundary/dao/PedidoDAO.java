@@ -26,9 +26,11 @@ public class PedidoDAO extends DAO implements DAOCrud<Pedido>  {
 				comando = con.prepareStatement(ArquivosConfig.pedidoSearchByID);
 				comando.setInt(1, id);
 				ResultSet r = comando.executeQuery();
-				pedido = getPedidoFromResultSet(r);
-				ItemPedidoDAO dao = new ItemPedidoDAO();
-				pedido.setItens(dao.getAllFromPedido(id));
+				if (r.next()) {
+				  pedido = getPedidoFromResultSet(r);
+				  ItemPedidoDAO dao = new ItemPedidoDAO();
+				  pedido.setItens(dao.getAllFromPedido(id));
+				}
 				//pedido.setItens(itens);
 			} catch (Exception e) {
 				e.printStackTrace();

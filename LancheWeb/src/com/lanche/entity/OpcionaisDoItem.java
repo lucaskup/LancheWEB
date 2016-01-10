@@ -4,6 +4,9 @@ public class OpcionaisDoItem {
 	private Opcionais opcional;
 	private int quantidade;
 
+	public OpcionaisDoItem(){
+		
+	}
 	public OpcionaisDoItem(Opcionais opcional, int quantidade) {
 		super();
 		this.opcional = opcional;

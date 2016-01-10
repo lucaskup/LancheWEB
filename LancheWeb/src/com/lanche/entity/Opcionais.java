@@ -9,6 +9,9 @@ public class Opcionais implements Comparable<Opcionais> {
 	private boolean permiteMaisQueUm;
 	private Date dtCadastro;
 	private Date dtModificacao;
+	public Opcionais(){
+		
+	}
 	
 	public Opcionais(int id, String descricao, double precoAdicional,
 			boolean permiteMaisQueUm, Date dtCadastro, Date dtModificacao) {

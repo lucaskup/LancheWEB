@@ -50,4 +50,6 @@ public final class ArquivosConfig {
 	public static final String configuracoesSelect = "SELECT (SELECT MAX(p.idPedido) FROM lanche.pedido p) AS ultimo_idPedido, (SELECT s.next FROM lanche._sequences s WHERE name = 'seq_numPedido') AS ultimo_numPedido";
 	public static final String configuracoesAlteraNumPedido = "UPDATE lanche._sequences SET next = ? WHERE name = 'seq_numPedido'";
 	
+	public static final String tokenInsert = "INSERT INTO lanche.token (token, dtCriacao, validade, fkUsuario) VALUES (?, ?, ?, ?)";
+	public static final String tokenSelect = "SELECT token.idToken, token.token, token.dtCriacao, token.validade, token.fkUsuario FROM lanche.token WHERE token.token = ? and fkUsuario = ?";
 }

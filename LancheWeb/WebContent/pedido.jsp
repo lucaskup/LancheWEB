@@ -168,8 +168,9 @@
         <paper-button onclick="passarParaFazendo('<%=pedido.getId()%>')">Passar para Fazendo</paper-button>
         <paper-button onclick="passarParaPronto('<%=pedido.getId()%>')">Passar para Pronto</paper-button>
       </div>
+      <paper-tooltip for="icone<%=pedido.getId()%>"><%="Cadastro por "+pedido.getNomeUsuarioCriacao()%></paper-tooltip>
     </paper-card>
-    <paper-tooltip for="icone<%=pedido.getId()%>"><%="Cadastro por "+pedido.getNomeUsuarioCriacao()%></paper-tooltip>
+    
 			  
 		  <%  
 		  }

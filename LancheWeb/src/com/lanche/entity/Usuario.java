@@ -15,6 +15,9 @@ public class Usuario {
 	private String password;
 	private boolean ativo;
 	
+	public Usuario(){
+		
+	}
 	public Usuario(int id, String login, String nome, String sobrenome, Date dataNascimento,
 			String turma, Funcao funcao, String password, boolean ativo) {
 		super();

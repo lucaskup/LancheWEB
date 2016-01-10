@@ -89,6 +89,7 @@
 	       		<table id="tabela">
 			  	<thead>
 				  <tr>
+				  	<th>ID</th>
 				    <th>Descrição</th> 
 				    <th>Preço</th>
 				    <th></th>
@@ -108,7 +109,7 @@
 					  df.setDecimalFormatSymbols(custom);
 				  %>
 					  <tr>
-					  	<td class="td_hidden"><%=lanche.getId()%></td>
+					  	<td class="td_numeric"><%=lanche.getId()%></td>
 					    <td class="td_alpha"><%=lanche.getDescricao()%></td> 
 					    <td class="td_numeric"><%=df.format(lanche.getPreco())%></td>
 					    <td class="td_logic"><paper-icon-button onclick="adicionarLanche('<%=lanche.getId()%>')" icon="add-circle-outline"></paper-icon-button></td>
